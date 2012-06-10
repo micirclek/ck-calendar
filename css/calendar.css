@@ -1,0 +1,28 @@
+.table.calendar tbody tr:hover td,
+.table.calendar tbody tr:hover th {
+	background-color: transparent;
+}
+
+.calendar thead th.dow-name {
+	text-align: center;
+}
+
+.event-entry.closed .title-text,
+.event-entry.closed .status-text {
+	color: red;
+}
+
+.event-entry.cancelled .title-text,
+.event-entry.cancelled .status-text {
+	color: red;
+}
+
+.event-entry.full .title-text,
+.event-entry.full .status-text {
+	color: green;
+}
+
+.event-entry.pending .title-text,
+.event-entry.pending .status-text {
+	color: purple;
+}
