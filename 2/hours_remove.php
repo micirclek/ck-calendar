@@ -28,7 +28,7 @@ if (!$result || $result->num_rows != 1) {
 }
 $hours_data = $result->fetch_assoc();
 
-if (!is_auth_manage_hours($_SESSION, $hours_data, $config, true)) {
+if (!is_auth_manage_hours($_SESSION, $hours_data, true)) {
 	$response->add_item('msg', 'insufficient permissions');
 	goto end;
 }

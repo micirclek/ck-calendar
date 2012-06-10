@@ -28,7 +28,7 @@ if (!$result || $result->num_rows != 1) {
 }
 $event_data = $result->fetch_assoc();
 
-if (!is_auth_edit_event($_SESSION, $event_data, $config)) {
+if (!is_auth_edit_event($_SESSION, $event_data)) {
 	$response->add_item('msg', 'insufficient permissions');
 	goto end;
 }

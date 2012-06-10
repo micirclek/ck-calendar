@@ -30,7 +30,7 @@ if ($event_data === false)
 	goto end;
 }
 
-$edit_signups = is_auth_edit_signups($_SESSION, $event_data, $config);
+$edit_signups = is_auth_edit_signups($_SESSION, $event_data);
 
 //check if the user is trying to sign someone else up for the event
 if (array_key_exists('user_id', $_POST)) {

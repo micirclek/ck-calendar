@@ -159,11 +159,11 @@ function user_login($mysqli, $user_id, $persistent, $key = NULL)
  *                         ($_SESSION will work perfectly)
  * @param array $event_data an array with data on the event, this should
  *                          contain at least the keys creator and leader
- * @param Config $config a configuration object
  * @return bool true if the user is authorized, false otherwise
  */
-function is_auth_edit_signups($user_data, $event_data, $config)
+function is_auth_edit_signups($user_data, $event_data)
 {
+	$config = new Config();
 	$manager_id = isset($event_data['leader']) ? $event_data['leader'] : $event_data['creator'];
 	return (($user_data['user_id'] == $manager_id) ||
 	        ($user_data['access_level'] >= $config->get('access_edit_signups', ACCESS_CHAIRPERSON)));
@@ -177,11 +177,11 @@ function is_auth_edit_signups($user_data, $event_data, $config)
  *                         ($_SESSION will work perfectly)
  * @param array $event_data an array with data on the event, this should
  *                          contain at least the key creator
- * @param Config $config a configuration object
  * @return bool true if the user is authorized, false otherwise
  */
-function is_auth_edit_event($user_data, $event_data, $config)
+function is_auth_edit_event($user_data, $event_data)
 {
+	$config = new Config();
 	return (($user_data['user_id'] == $event_data['creator']) ||
 	        ($user_data['access_level'] >= $config->get('access_edit_event', ACCESS_CHAIRPERSON)));
 }
@@ -191,12 +191,12 @@ function is_auth_edit_event($user_data, $event_data, $config)
  *
  * @param array $user_data an array with the user_id and access_level
  * @param array $event_data an array with the leader and creator user ids
- * @param Config $config a configuration object
  * @param bool $hours_submitted true if the hours are already submitted, false
  *                              otherwise
  */
-function is_auth_manage_hours($user_data, $event_data, $config, $hours_submitted)
+function is_auth_manage_hours($user_data, $event_data, $hours_submitted)
 {
+	$config = new Config();
 	$manager_id = isset($event_data['leader']) ? $event_data['leader'] : $event_data['creator'];
 	if ($hours_submitted) {
 		return ($user_data['access_level'] >= $config->get('access_edit_hours', ACCESS_CHAIRPERSON));

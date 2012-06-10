@@ -36,7 +36,7 @@ if ($event_data['hours_submitted']) {
 	goto end;
 }
 
-if (!is_auth_manage_hours($_SESSION, $event_data, $config, false)) {
+if (!is_auth_manage_hours($_SESSION, $event_data, false)) {
 	$response->add_item('msg', 'insufficient permissions to edit event');
 	goto end;
 }

@@ -47,9 +47,9 @@ $edit_event = false;
 $manage_hours = false;
 $edit_signups = false;
 if (isset($user_id)) {
-	$edit_event = is_auth_edit_event($_SESSION, $event_data, $config);
-	$edit_signups = is_auth_edit_signups($_SESSION, $event_data, $config);
-	$manage_hours = is_auth_manage_hours($_SESSION, $event_data, $config, $event_data['hours_submitted']);
+	$edit_event = is_auth_edit_event($_SESSION, $event_data);
+	$edit_signups = is_auth_edit_signups($_SESSION, $event_data);
+	$manage_hours = is_auth_manage_hours($_SESSION, $event_data, $event_data['hours_submitted']);
 }
 
 $description = $event_data['description'];
