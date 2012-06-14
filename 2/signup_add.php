@@ -21,7 +21,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $event_id = intval($_POST['event_id']);
 $notes = $mysqli->real_escape_string($_POST['notes']);
-$seats = ($_POST['seats']) ? intval($_POST['seats']) : 'NULL';
+$seats = (isset($_POST['seats']) && $_POST['seats']) ? intval($_POST['seats']) : 'NULL';
 
 $event_data = event_get_data($mysqli, $event_id);
 if ($event_data === false)
