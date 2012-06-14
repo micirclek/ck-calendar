@@ -54,6 +54,7 @@ if (!$mysqli->query($query)) {
 	goto end;
 }
 
+Log::insert($mysqli, Log::event_add, NULL, $mysqli->insert_id, NULL);
 $response->set_status('success');
 
 end:
