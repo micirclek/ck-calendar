@@ -18,8 +18,9 @@ if (isset($_SESSION['user_id'])) {
 
 $header = new Header($mysqli, $config);
 $header->add_title('Event');
-$header->include_script('jquery-form');
+$header->include_script('form');
 $header->include_script('event');
+$header->include_style('jquery-ui');
 $header->export_variable('event_id', $event_id);
 
 $event_data = event_get_data($mysqli, $event_id);
@@ -215,118 +216,9 @@ if ($edit_event) {
 	$tab_class = '';
 ?>
 		<form class='form-horizontal' id='event-edit' action='2/event_edit.php' method='post'>
-			<div class='control-group'>
-				<label class='control-label'>Event Name</label>
-				<div class='controls'>
-					<input name='name' type='text' value='<?php echo $event_data['name']; ?>' />
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Event Description</label>
-				<div class='controls'>
-					<textarea name='description' rows="3"><?php echo $event_data['description']; ?></textarea>
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Status</label>
-				<div class='controls'>
-					<select name='status'>
 <?php
-	$statuses = array('open' => 'Open', 'closed' => 'Closed',
-	                  'cancelled' => 'Cancelled', 'pending' => 'Pending');
-	echo make_form_options($statuses, $event_data['status']);
+	echo event_form_construct($mysqli, $event_data);
 ?>
-					</select>
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Start Time</label>
-				<div class='controls'>
-					<input name='start_time' type='datetime-local' value='<?php echo date(DISPLAY_DATE_FMT . ' ' . DISPLAY_TIME_FMT, $event_data['start_ts']); ?>' />
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>End Time</label>
-				<div class='controls'>
-					<input name='end_time' type='datetime-local' value='<?php echo date(DISPLAY_DATE_FMT . ' ' . DISPLAY_TIME_FMT, $event_data['end_ts']); ?>' />
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Site Leader (id)</label>
-				<div class='controls'>
-<?php
-	//TODO this should be an autocomplete
-?>
-					<input name='leader' type='number' step='1' min='1' value='<?php echo $event_data['leader']; ?>' />
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Capacity</label>
-				<div class='controls'>
-					<input name='capacity' type='number' step='1' min='0' value='<?php echo $event_data['capacity']; ?>' />
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Meeting Location</label>
-				<div class='controls'>
-					<input name='meeting_location' type='text' value='<?php echo $event_data['meeting_location']; ?>' />
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Event Location</label>
-				<div class='controls'>
-					<input name='location' type='text' value='<?php echo $event_data['location']; ?>' />
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Driver Needed</label>
-				<div class='controls'>
-					<select name='driver_needed'>
-<?php
-	echo make_form_options(array(0 => 'No', 1 => 'Yes'), $event_data['driver_needed']);
-?>
-					</select>
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Committee</label>
-				<div class='controls'>
-					<select name='committee'>
-<?php
-	$committees = array(NULL => 'None');
-	$result = $mysqli->query("SELECT committee_id, name FROM committees;");
-	while ($row = $result->fetch_assoc()) {
-		$committees[$row['committee_id']] = $row['name'];
-	}
-	echo make_form_options($committees, $event_data['committee']);
-?>
-					</select>
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Primary Type</label>
-				<div class='controls'>
-					<select name='primary_type'>
-<?php
-	$primary_types = array('service' => 'Service', 'k-fam' => 'K-Fam',
-	                       'fundraiser' => 'Fundraiser', 'meeting' => 'Meeting',
-	                       'social' => 'Social', 'other' => 'Other');
-	echo make_form_options($primary_types, $event_data['primary_type']);
-?>
-					</select>
-				</div>
-			</div>
-			<div class='control-group'>
-				<label class='control-label'>Secondary Type</label>
-				<div class='controls'>
-					<select name='secondary_type'>
-<?php
-	$secondary_types = array(NULL => 'None', 'k-fam' => 'K-Fam', 'social' => 'Social');
-	echo make_form_options($secondary_types, $event_data['secondary_type']);
-?>
-					</select>
-				</div>
-			</div>
 			<div class='form-actions'>
 				<button type='submit' class='btn btn-primary'>Edit Event</button>
 			</div>

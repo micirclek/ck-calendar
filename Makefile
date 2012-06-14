@@ -4,10 +4,14 @@ JAVA = java
 
 all: build
 
-build: css/calendar.min.css js/login.min.js js/jquery.form.min.js js/event.min.js js/calendar.min.js
+build: js/login.min.js js/event.min.js js/calendar.min.js
+build: js/form.min.js
+build: css/calendar.min.css
 
 %.min.css: %.css
-	$(JAVA) -jar $(CSS_CLOSURE) $< > $@ || (rm -f $@; false)
+	$(JAVA) -jar $(CSS_CLOSURE) $^ > $@ || (rm -f $@; false)
 
 %.min.js: %.js
-	$(JAVA) -jar $(JS_CLOSURE) $< > $@ || (rm -f $@; false)
+	$(JAVA) -jar $(JS_CLOSURE) $^ > $@ || (rm -f $@; false)
+
+js/form.min.js: js/jquery-ui.js js/jquery.form.js js/jquery-ui.timepicker.js

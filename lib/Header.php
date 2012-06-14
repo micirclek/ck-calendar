@@ -203,18 +203,19 @@ class Header {
 	//A table of shortcut names matched to the location of a javascript file
 	private $_script_lookup = array(
 		'jquery' => 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
-		'jquery-form' => 'js/jquery.form.min.js',
 		'bootstrap' => 'js/bootstrap.min.js',
 
 		'calendar' => 'js/calendar.min.js',
 		'login' => 'js/login.min.js',
 		'event' => 'js/event.min.js',
+		'form' => 'js/form.min.js',
 	);
 
 	//A table of shortcut names matched to the location of a css file
 	private $_style_lookup = array(
 		'calendar' => 'css/calendar.min.css',
 		'bootstrap' => 'css/bootstrap.min.css',
+		'jquery-ui' => 'css/jquery-ui.css',
 	);
 
 	//a table of names matched to a doctype definition

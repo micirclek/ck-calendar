@@ -59,7 +59,7 @@ if (isset($_GET['year'])) {
 	$year_start = intval($_GET['year']);
 }
 
-echo "<div class='row'><div class='span4'>&nbsp;</div><div class='span4'>";
+echo "<div class='row'><div class='span4'>";
 
 $form = "<form action='' name='month_select' method='get' class='form-inline'>";
 
@@ -88,7 +88,16 @@ $form .= '</form>';
 
 echo $form;
 
-echo "</div><div class='span4'>&nbsp;</div></div>";
+echo "</div><div class='span4'>&nbsp;</div>";
+
+echo "<div class='span4' style='text-align: right;'>";
+
+if (isset($_SESSION['user_id']) &&
+    $_SESSION['access_level'] >= $config->get('access_add_event', ACCESS_MEMBER)) {
+	echo "<a href='event_add.php'><button type='button' class='btn btn-success'>Add Event</button></a>";
+}
+
+echo "</div></div>";
 
 echo "<div class='row'><div class='span12'>";
 

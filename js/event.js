@@ -1,8 +1,9 @@
 $(document).ready(function() {
-	var signup_form, edit_form, hours_submit_form;
+	var signup_form, edit_form, hours_submit_form, add_form;
 
 	function add_event_id(data, $form, options) {
 		data.push({name: 'event_id', value: Globals.event_id});
+		return true;
 	}
 
 	signup_form = $('form#event-signup')
@@ -31,7 +32,16 @@ $(document).ready(function() {
 					alert('Error modifying event: ' + response.payload.msg);
 				}
 			},
-			beforeSubmit: add_event_id
+			beforeSubmit: function(data, $form, options) {
+				for (var i in data) {
+					if (data[i].name === 'start_ts') {
+						data[i].name = 'start_time';
+					} else if (data[i].name === 'end_ts') {
+						data[i].name = 'end_time';
+					}
+				}
+				return add_event_id(data, $form, options);
+			}
 		});
 	}
 
@@ -48,6 +58,30 @@ $(document).ready(function() {
 				}
 			},
 			beforeSubmit: add_event_id
+		});
+	}
+
+	add_event_form = $('form#event-add-form');
+	if (add_event_form.length > 0) {
+		add_event_form.ajaxForm({
+			dataType: 'json',
+			success: function(response) {
+				if (response.status === 'success' || response.status === 'warning') {
+					window.history.back();
+				} else {
+					alert('Error creating event: ' + response.payload.msg);
+				}
+			},
+			beforeSubmit: function(data, $form, options) {
+				for (var i in data) {
+					if (data[i].name === 'start_ts') {
+						data[i].name = 'start_time';
+					} else if (data[i].name === 'end_ts') {
+						data[i].name = 'end_time';
+					}
+				}
+				return true;
+			}
 		});
 	}
 

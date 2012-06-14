@@ -3,6 +3,7 @@ require_once('../include/init.php');
 require_once(BASE_PATH . '/lib/Log.php');
 require_once(BASE_PATH . '/lib/Response.php');
 require_once(BASE_PATH . '/lib/user.php');
+require_once(BASE_PATH . '/lib/event.php');
 require_once(BASE_PATH . '/lib/db.php');
 
 $response = new Response();
@@ -33,24 +34,13 @@ if (!is_auth_edit_event($_SESSION, $event_data)) {
 	goto end;
 }
 
-$expected = array(
-	array('name' => 'name', 'type' => 'string'),
-	array('name' => 'description', 'type' => 'string'),
-	array('name' => 'status', 'type' => 'string'),
-	array('name' => 'leader', 'type' => 'user'),
-	array('name' => 'capacity', 'type' => 'int_n'),
-	array('name' => 'start_time', 'type' => 'datetime'),
-	array('name' => 'end_time', 'type' => 'datetime'),
-	array('name' => 'meeting_location', 'type' => 'string'),
-	array('name' => 'location', 'type' => 'string'),
-	array('name' => 'driver', 'type' => 'bool'),
-	array('name' => 'primary_type', 'type' => 'string'),
-	array('name' => 'secondary_type', 'type' => 'string_n'),
-	array('name' => 'committee_id', 'type' => 'committee'),
-);
+if (isset($_POST['creator'])) {
+	$response->add_item('msg', 'cannot change creator for existing event');
+	goto end;
+}
 
 $found = array();
-foreach ($expected as $item) {
+foreach ($EVENT_FIELDS as $item) {
 	if (array_key_exists($item['name'], $_POST)) {
 		$found[] = array(
 		                 'name' => $item['name'],

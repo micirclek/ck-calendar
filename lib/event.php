@@ -50,4 +50,71 @@ function event_get_status($event_data)
 	return $status;
 }
 
+/**
+ * constructs a form to edit/create an event
+ *
+ * @param mysqli $mysqli a database object
+ * @param array $saved an array of saved form data
+ * @return string the form
+ */
+function event_form_construct($mysqli, $saved = NULL)
+{
+	$status_options = array('open' => 'Open', 'closed' => 'Closed',
+	                        'cancelled' => 'Cancelled', 'pending' => 'Pending');
+	$primary_types = array('service' => 'Service', 'k-fam' => 'K-Fam',
+	                       'fundraiser' => 'Fundraiser', 'meeting' => 'Meeting',
+	                       'social' => 'Social', 'other' => 'Other');
+	$secondary_types = array(NULL => 'None', 'k-fam' => 'K-Fam', 'social' => 'Social');
+	$committees = array(NULL => 'None');
+	$result = $mysqli->query("SELECT committee_id, name FROM committees;");
+	if ($result) {
+
+	} else {
+		Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
+	}
+	while ($row = $result->fetch_assoc()) {
+		$committees[$row['committee_id']] = $row['name'];
+	}
+
+	$form_info = array(
+		array('name' => 'name', 'title' => 'Event Name', 'type' => 'text'),
+		array('name' => 'description', 'title' => 'Event Description', 'type' => 'textarea'),
+		array('name' => 'status', 'title' => 'Status', 'type' => 'select', 'options' => $status_options),
+		array('name' => 'start_ts', 'title' => 'Start Time', 'type' => 'datetime-local'),
+		array('name' => 'end_ts', 'title' => 'End Time', 'type' => 'datetime-local'),
+		array('name' => 'leader', 'title' => 'Site Leader (id)', 'type' => 'user'),
+		array('name' => 'capacity', 'title' => 'Capacity', 'type' => 'number', 'options' => array('step' => '1', 'min' => '0')),
+		array('name' => 'meeting_location', 'title' => 'Meeting Location', 'type' => 'text'),
+		array('name' => 'location', 'title' => 'Event Location', 'type' => 'text'),
+		array('name' => 'driver_needed', 'title' => 'Driver Needed?', 'type' => 'select', 'options' => array(0 => 'No', 1 => 'Yes')),
+		array('name' => 'committee_id', 'title' => 'Committee', 'type' => 'select', 'options' => $committees),
+		array('name' => 'primary_type', 'title' => 'Primary Type', 'type' => 'select', 'options' => $primary_types),
+		array('name' => 'secondary_type', 'title' => 'Secondary Type', 'type' => 'select', 'options' => $secondary_types),
+	);
+
+	if (!isset($saved['status'])) {
+		unset($form_info[2]); //do not show status for new event form
+	}
+
+	return form_construct($form_info, $saved);
+}
+
+$EVENT_FIELDS = array(
+	array('name' => 'name', 'type' => 'string'),
+	array('name' => 'description', 'type' => 'string'),
+	array('name' => 'status', 'type' => 'string'),
+	array('name' => 'creator', 'type' => 'user'),
+	array('name' => 'leader', 'type' => 'user'),
+	array('name' => 'capacity', 'type' => 'int_n'),
+	array('name' => 'start_time', 'type' => 'datetime'),
+	array('name' => 'end_time', 'type' => 'datetime'),
+	array('name' => 'meeting_location', 'type' => 'string'),
+	array('name' => 'location', 'type' => 'string'),
+	array('name' => 'driver_needed', 'type' => 'bool'),
+	array('name' => 'primary_type', 'type' => 'string'),
+	array('name' => 'secondary_type', 'type' => 'string_n'),
+	array('name' => 'committee_id', 'type' => 'committee'),
+);
+
+
 ?>
