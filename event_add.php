@@ -10,6 +10,7 @@ $header->add_title('Create Event');
 $header->include_script('form');
 $header->include_script('event');
 $header->include_style('jquery-ui');
+$header->include_style('form');
 
 $header->render_head();
 

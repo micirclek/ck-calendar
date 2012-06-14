@@ -21,6 +21,7 @@ $header->add_title('Event');
 $header->include_script('form');
 $header->include_script('event');
 $header->include_style('jquery-ui');
+$header->include_style('form');
 $header->export_variable('event_id', $event_id);
 
 $event_data = event_get_data($mysqli, $event_id);

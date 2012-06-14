@@ -216,6 +216,8 @@ class Header {
 		'calendar' => 'css/calendar.min.css',
 		'bootstrap' => 'css/bootstrap.min.css',
 		'jquery-ui' => 'css/jquery-ui.css',
+
+		'form' => 'css/form.min.css',
 	);
 
 	//a table of names matched to a doctype definition

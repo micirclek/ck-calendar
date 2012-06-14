@@ -6,6 +6,24 @@ $(document).ready(function() {
 		return true;
 	}
 
+	function fix_event_times(data, $form, options) {
+		var start_date, start_time, end_date, end_time;
+		for (var i in data) {
+			if (data[i].name === 'start_ts-date') {
+				start_date = data[i].value;
+			} else if (data[i].name === 'start_ts-time') {
+				start_time = data[i].value;
+			} else if (data[i].name === 'end_ts-date') {
+				end_date = data[i].value;
+			} else if (data[i].name === 'end_ts-time') {
+				end_time = data[i].value;
+			}
+			data.push({name: 'start_time', value: start_date + ' ' + start_time});
+			data.push({name: 'end_time', value: end_date + ' ' + end_time});
+		}
+		return true;
+	}
+
 	signup_form = $('form#event-signup')
 	if (signup_form.length > 0) {
 		signup_form.ajaxForm({
@@ -33,13 +51,8 @@ $(document).ready(function() {
 				}
 			},
 			beforeSubmit: function(data, $form, options) {
-				for (var i in data) {
-					if (data[i].name === 'start_ts') {
-						data[i].name = 'start_time';
-					} else if (data[i].name === 'end_ts') {
-						data[i].name = 'end_time';
-					}
-				}
+				if (!fix_event_times(data, $form, options))
+					return false;
 				return add_event_id(data, $form, options);
 			}
 		});
@@ -72,16 +85,7 @@ $(document).ready(function() {
 					alert('Error creating event: ' + response.payload.msg);
 				}
 			},
-			beforeSubmit: function(data, $form, options) {
-				for (var i in data) {
-					if (data[i].name === 'start_ts') {
-						data[i].name = 'start_time';
-					} else if (data[i].name === 'end_ts') {
-						data[i].name = 'end_time';
-					}
-				}
-				return true;
-			}
+			beforeSubmit: fix_event_ids
 		});
 	}
 
