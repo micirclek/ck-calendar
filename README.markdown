@@ -19,5 +19,8 @@ should be passed an array which can contain any of the following options:
 *  access_submit_hours: the access level required to submit event hours if not
    the event manager
 *  access_edit_hours: the access level required to edit submitted hours
-*  calendar_display_moth: the number of months to display on the calendar at once
+*  access_add_event: the access level required to add an event
+*  access_view_members: the access level required to retrieve information on
+   registered members
+*  calendar_display_moths: the number of months to display on the calendar at once
 *  year_start: the first year to show in year selection items

@@ -43,8 +43,9 @@ function form_construct($form_info, $saved = NULL)
 		$form .= "<label class='control-label'>" . $item['title'] . "</label>";
 		$form .= "<div class='controls'>";
 		switch ($item['type']) {
-			case 'user': //TODO autocomplete for users
-				$form .= "<input name='" . $item['name'] . "' type='number' step='1' min='1'";
+			case 'user':
+				$form .= "<input class='user-input' name='" . $item['name'] .
+				         "' type='number' step='1' min='1'";
 				if ($saved && array_key_exists($item['name'], $saved)) {
 					$form .= " value='" . $saved[$item['name']] . "'";
 				}

@@ -82,7 +82,7 @@ function event_form_construct($mysqli, $saved = NULL)
 		array('name' => 'status', 'title' => 'Status', 'type' => 'select', 'options' => $status_options),
 		array('name' => 'start_ts', 'title' => 'Start Time', 'type' => 'datetime-local'),
 		array('name' => 'end_ts', 'title' => 'End Time', 'type' => 'datetime-local'),
-		array('name' => 'leader', 'title' => 'Site Leader (id)', 'type' => 'user'),
+		array('name' => 'leader', 'title' => 'Site Leader (email)', 'type' => 'user'),
 		array('name' => 'capacity', 'title' => 'Capacity', 'type' => 'number', 'options' => array('step' => '1', 'min' => '0')),
 		array('name' => 'meeting_location', 'title' => 'Meeting Location', 'type' => 'text'),
 		array('name' => 'location', 'title' => 'Event Location', 'type' => 'text'),
