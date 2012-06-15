@@ -43,7 +43,7 @@ class Log {
 	                              $user_id_action = NULL, $event_id = NULL,
 	                              $text = NULL)
 	{
-		$debug = debug_backtrace(0, 1);
+		$debug = debug_backtrace();
 
 		$keys = array(
 			array('name' => 'entry_type', 'type' => 'int'),

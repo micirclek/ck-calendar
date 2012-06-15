@@ -85,7 +85,7 @@ $(document).ready(function() {
 					alert('Error creating event: ' + response.payload.msg);
 				}
 			},
-			beforeSubmit: fix_event_ids
+			beforeSubmit: fix_event_times
 		});
 	}
 

@@ -3,6 +3,10 @@ as little time as possible.  With this version, some features are not yet
 supported, that will be changing.  For now, the main thing that needs to be
 done to make things work is to set up a configuration object.
 
+To view a demo of the site, please go to http;//jpevarnek.net/ck-framework/.
+This may not be the latest version but should never be older than a couple
+days.
+
 The configuration object should be set up using the lib/ConfigGen object.  It
 should be passed an array which can contain any of the following options:
 

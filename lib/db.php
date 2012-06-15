@@ -94,7 +94,7 @@ function __db_escape_values($mysqli, $type, $value)
 {
 	switch ($type) {
 		case 'string_n': //string that can be null
-			if ($value === NULL) {
+			if (!$value) {
 				return 'NULL';
 				break;
 			}
