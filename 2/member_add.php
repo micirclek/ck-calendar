@@ -63,12 +63,7 @@ if (!$mysqli->query($query)) {
 	goto end;
 }
 $user_id = $mysqli->insert_id;
-
-$query = 'INSERT INTO users_yearly (user_id, year) VALUES (' . $user_id . ',' . CURRENT_YEAR . ');';
-if (!$mysqli->query($query)) {
-	$response->add_item('msg', 'error adding yearly data');
-	goto end;
-}
+$response->add_item('user_id', $user_id);
 
 try {
 	user_login($mysqli, $user_id, false);
