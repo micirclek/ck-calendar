@@ -10,7 +10,7 @@ define('EMAIL_LEN', 80); //number of characters to store in email fields
 define('PHONE_LEN', 40);
 
 define('HASH_TYPE', 'sha256');
-define('SALT_LEN', 16);
+define('SALT_LEN', 8);
 
 if (date('m') <= 4) {
 	define('CURRENT_YEAR', date('Y') - 1);

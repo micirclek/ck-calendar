@@ -43,7 +43,7 @@ function show_event($data)
 	return $output;
 }
 
-$header = new Header($mysqli, $config);
+$header = new Header($mysqli);
 $header->add_title('Calendar');
 $header->include_style('calendar');
 $header->include_script('calendar');

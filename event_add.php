@@ -5,7 +5,7 @@ require_once(BASE_PATH . '/lib/Header.php');
 require_once(BASE_PATH . '/lib/form.php');
 require_once(BASE_PATH . '/lib/event.php');
 
-$header = new Header($mysqli, $config);
+$header = new Header($mysqli);
 $header->add_title('Create Event');
 $header->include_script('form');
 $header->include_script('event');

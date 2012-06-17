@@ -52,6 +52,7 @@ function form_construct($form_info, $saved = NULL)
 				$form .= " />";
 				break;
 			case 'text':
+			case 'password':
 			case 'number':
 			case 'datetime-local':
 				$form .= "<input name='" . $item['name'] . "' type='" . $item['type'] . "'";
@@ -63,8 +64,7 @@ function form_construct($form_info, $saved = NULL)
 				if ($saved && array_key_exists($item['name'], $saved)) {
 					$form .= " value='";
 					switch ($item['type']) {
-						case 'number':
-						case 'text':
+						default:
 							$form .= $saved[$item['name']];
 							break;
 						case 'datetime-local':

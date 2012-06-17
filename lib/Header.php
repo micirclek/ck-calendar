@@ -73,6 +73,8 @@ class Header {
 	 */
 	public function render_head()
 	{
+		$config = new Config();
+
 		if ($this->_check_cookie)
 			$this->_cookie_login();
 
@@ -102,7 +104,7 @@ class Header {
 
 		$content .= "<div class='navbar navbar-fixed-top'><div class='navbar-inner'><div class='container'>";
 		$content .= "<a class='brand' href='index.php'>" .
-		            $this->_config->get('club_name', 'Circle K') . '</a>';
+		            $config->get('club_name', 'Circle K') . '</a>';
 		if (!empty($_SESSION['user_id'])) {
 			$content .= "<ul class='nav pull-right'>";
 
@@ -116,11 +118,12 @@ class Header {
 			$content .= '</ul>';
 		} else {
 			$this->include_script('login');
-			$content .= "<div class='pull-right form-inline'>";
+			$content .= "<div class='pull-right form-inline' id='login'>";
 			$content .= "<input id='login-email' type='text' placeholder='email' class='span2' /> ";
 			$content .= "<input id='login-pw' type='password' placeholder='password' class='span2' /> ";
 			$content .= "<label class='checkbox' style='color: #999999;'><input type='checkbox' id='login-persistent'> Remember me</label>";
-			$content .= "<button id='login-submit' type='submit' class='btn'>Log In</button>";
+			$content .= "<button id='login-submit' type='submit' class='btn btn-primary'>Log In</button>";
+			$content .= "<a href='member_register.php'><button class='btn'>Register</button></a>";
 			$content .= '</div>';
 		}
 		$content .= "</div></div></div>"; //.container .navbar-inner navbar
@@ -187,14 +190,14 @@ class Header {
 		}
 	}
 
-	public function __construct($mysqli = NULL, $config)
+	public function __construct($mysqli = NULL)
 	{
+		$config = new Config();
 		$this->_mysqli = $mysqli;
 		if ($mysqli == NULL) {
 			$this->_check_cookie = false;
 			//disable anything needing the database
 		}
-		$this->_config = $config;
 		$this->_title = $config->get('club_name', 'Circle K');
 	}
 
@@ -207,8 +210,9 @@ class Header {
 
 		'calendar' => 'js/calendar.min.js',
 		'login' => 'js/login.min.js',
-		'event' => 'js/event.min.js',
 		'form' => 'js/form.min.js',
+		'event' => 'js/event.min.js',
+		'member' => 'js/member.min.js',
 	);
 
 	//A table of shortcut names matched to the location of a css file
@@ -230,7 +234,6 @@ class Header {
 	private $_scripts = array('jquery' => 'jquery', 'bootstrap' => 'bootstrap',);
 	private $_js = array();
 	private $_styles = array('bootstrap' => 'bootstrap',);
-	private $_config = NULL;
 	private $_js_vars = array();
 	private $_check_cookie = true;
 

@@ -16,6 +16,12 @@ $(document).ready(function() {
 				}
 			}, 'json'
 		);
+	});
 
+	$('#login input').keypress(function(e) {
+		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+			$('#login #login-submit').click();
+		}
+		return true;
 	});
 });

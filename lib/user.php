@@ -134,7 +134,7 @@ function user_login($mysqli, $user_id, $persistent, $key = NULL)
 		if ($key) {
 			$_SESSION['session_key'] = $key;
 		} else {
-			$plain = hash('sha256', uniqid(mt_rand(0, 9223372036854775807), true));
+			$plain = hash('sha256', uniqid(mt_rand(), true));
 			$encrypt = hash('sha256', $plain);
 			$expTime = strtotime('+30 days');
 			$expSQL = date(MYSQL_DATETIME_FMT, $expTime);
@@ -204,6 +204,14 @@ function is_auth_manage_hours($user_data, $event_data, $hours_submitted)
 		return (($user_data['user_id'] == $manager_id) ||
 		        ($user_data['access_level'] >= $config->get('access_submit_hours', ACCESS_CHAIRPERSON)));
 	}
+}
+
+function generate_password($password)
+{
+	$salt = md5(uniqid(mt_rand(), true));
+	$salt = substr($salt, 0, SALT_LEN);
+	$hash = hash('sha256', $salt . hash('sha256', $password));
+	return array('password' => $hash, 'salt' => $salt);
 }
 
 ?>

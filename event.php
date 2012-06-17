@@ -16,7 +16,7 @@ if (isset($_SESSION['user_id'])) {
 	$user_id = $access_level = NULL;
 }
 
-$header = new Header($mysqli, $config);
+$header = new Header($mysqli);
 $header->add_title('Event');
 $header->include_script('form');
 $header->include_script('event');
