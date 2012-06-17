@@ -59,6 +59,8 @@ function event_get_status($event_data)
  */
 function event_form_construct($mysqli, $saved = NULL)
 {
+	$config = new Config();
+
 	$status_options = array('open' => 'Open', 'closed' => 'Closed',
 	                        'cancelled' => 'Cancelled', 'pending' => 'Pending');
 	$primary_types = array('service' => 'Service', 'k-fam' => 'K-Fam',
@@ -92,7 +94,8 @@ function event_form_construct($mysqli, $saved = NULL)
 		array('name' => 'secondary_type', 'title' => 'Secondary Type', 'type' => 'select', 'options' => $secondary_types),
 	);
 
-	if (!isset($saved['status'])) {
+	if (!isset($saved['status']) || ($saved['status'] == 'pending' &&
+	    $_SESSION['access_level'] < $config->get('access_edit_event', ACCESS_CHAIRPERSON))) {
 		unset($form_info[2]); //do not show status for new event form
 	}
 

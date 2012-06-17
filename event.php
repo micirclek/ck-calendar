@@ -93,8 +93,10 @@ echo "<div class='span6'>";
 echo "<dl class='dl-horizontal'>";
 echo '<dt>Start Time</dt>' . '<dd>' .date('F j g:ia', $event_data['start_ts']) . '</dd>';
 echo '<dt>End Time</dt>' . '<dd>' . date('F j g:ia', $event_data['end_ts']) . '</dd>';
-echo '<dt>Meeting Location</dt>' . '<dd>' . $event_data['meeting_location'] . '</dd>';
-echo '<dt>Event Location</dt>' . '<dd>' . $event_data['location'] . '</dd>';
+if ($event_data['meeting_location'])
+	echo '<dt>Meeting Location</dt>' . '<dd>' . $event_data['meeting_location'] . '</dd>';
+if ($event_data['location'])
+	echo '<dt>Event Location</dt>' . '<dd>' . $event_data['location'] . '</dd>';
 echo '<dt>Site Leader</dt>' . '<dd>' . $manager_name . " (<a href='mailto:" .
      $manager_email . "'>" . $manager_email . '</a>)' . '</dd>';
 if (isset($event_data['committee_name'])) {

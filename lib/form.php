@@ -65,7 +65,7 @@ function form_construct($form_info, $saved = NULL)
 					$form .= " value='";
 					switch ($item['type']) {
 						default:
-							$form .= $saved[$item['name']];
+							$form .= htmlspecialchars($saved[$item['name']], ENT_QUOTES);
 							break;
 						case 'datetime-local':
 							$form .= date(DISPLAY_DATE_FMT . ' ' . DISPLAY_TIME_FMT, $saved[$item['name']]);
@@ -78,7 +78,7 @@ function form_construct($form_info, $saved = NULL)
 			case 'textarea':
 				$form .= "<textarea name='" . $item['name'] . "' rows='3'>";
 				if ($saved && array_key_exists($item['name'], $saved)) {
-					$form .= $saved[$item['name']];
+					$form .= htmlspecialchars($saved[$item['name']], ENT_QUOTES);
 				}
 				$form .= "</textarea>";
 				break;
