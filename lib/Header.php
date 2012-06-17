@@ -108,11 +108,11 @@ class Header {
 		if (!empty($_SESSION['user_id'])) {
 			$content .= "<ul class='nav pull-right'>";
 
-
 			$content .= "<li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'>" .
 			            $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] .
 			            " <b class='caret'></b>" . '</a>';
 			$content .= "<ul class='dropdown-menu'>";
+			$content .= "<li><a href='hours.php'>My Hours</a></li>";
 			$content .= "<li><a href='logout.php'>Logout</a></li>";
 			$content .= '</ul></li>'; //.dropdown .dropdown-menu
 			$content .= '</ul>';
