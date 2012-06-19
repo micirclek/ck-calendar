@@ -18,33 +18,20 @@ $persistent = (bool)$_POST['persistent'];
 
 $response = new Response();
 
-$result = $mysqli->query("SELECT user_id, password, salt FROM users WHERE email='$email';");
-if (!$result) {
-	Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
-	$response->add_item('msg', 'Error getting user data, a bug report has been filed');
+$user_id = user_get_id($mysqli, $email);
+if (!$user_id) {
+	$response->add_item('msg', 'invalid email or password');
 	goto end;
-} else {
-	if ($result->num_rows) {
-		$user_data = $result->fetch_assoc();
+}
 
-		$hash = hash('sha256', $user_data['salt'] . hash('sha256', $password));
-		if ($hash == $user_data['password']) {
-			try {
-				user_login($mysqli, $user_data['user_id'], $persistent);
-			} catch (Exception $e) {
-				$response->add_item('msg', $e->getMessage());
-				goto end;
-			}
-
-			$response->set_status('success');
-		} else {
-			$response->add_item('msg', 'Invalid email or password');
-			goto end;
-		}
-	} else {
-		$response->add_item('msg', 'Invalid email or password');
+if (user_authenticate($mysqli, $user_id, $password)) {
+	try {
+		user_login($mysqli, $user_id, $persistent);
+	} catch (Exception $e) {
+		$response->add_item('msg', $e->getMessage());
 		goto end;
 	}
+	$response->set_status('success');
 }
 
 end:

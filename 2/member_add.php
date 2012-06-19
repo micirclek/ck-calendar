@@ -47,16 +47,7 @@ $pass_arr = generate_password($_POST['pass_a']);
 $_POST['password'] = $pass_arr['password'];
 $_POST['salt'] = $pass_arr['salt'];
 
-$member_fields = array(
-	array('name' => 'email', 'type' => 'string'),
-	array('name' => 'first_name', 'type' => 'string'),
-	array('name' => 'last_name', 'type' => 'string'),
-	array('name' => 'phone', 'type' => 'string'),
-	array('name' => 'password', 'type' => 'string'),
-	array('name' => 'salt', 'type' => 'string'),
-);
-
-$query = 'INSERT INTO users ' . db_get_insert_statement($mysqli, $member_fields, array($_POST)) . ';';
+$query = 'INSERT INTO users ' . db_get_insert_statement($mysqli, $MEMBER_FIELDS, array($_POST)) . ';';
 
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'error creating account');
@@ -64,6 +55,7 @@ if (!$mysqli->query($query)) {
 }
 $user_id = $mysqli->insert_id;
 $response->add_item('user_id', $user_id);
+Log::insert($mysqli, Log::member_add, $user_id, NULL, NULL);
 
 try {
 	user_login($mysqli, $user_id, false);

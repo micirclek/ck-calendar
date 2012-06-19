@@ -26,6 +26,59 @@ function user_get_access_level($year_data)
 }
 
 /**
+ * retrieves the user id associated with at email
+ *
+ * @param mysqli $mysqli the mysqli object for the database
+ * @param string $email the email address of the member (should be escaped)
+ * @return int the user id for the user (false on failure)
+ */
+function user_get_id($mysqli, $email)
+{
+	$result = $mysqli->query("SELECT user_id FROM users WHERE email='" . $email . "';");
+	if (!$result) {
+		Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
+		return false;
+	}
+
+	if (!$result->num_rows) {
+		return false;
+	}
+
+	$info = $result->fetch_assoc();
+	return intval($info['user_id']);
+}
+
+/**
+ * checks whether the password is correct for the given user id
+ *
+ * @param mysqli $mysqli a mysqli database connection
+ * @param int $user_id the user id to check against
+ * @param string $password the password to test
+ * @return bool true if credentials successful, false otherwise
+ */
+function user_authenticate($mysqli, $user_id, $password)
+{
+	$result = $mysqli->query("SELECT password, salt FROM users WHERE user_id=" . $user_id . ';');
+	if (!$result) {
+		Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
+		return false;
+	}
+
+	if (!$result->num_rows) {
+		return false;
+	}
+
+	$user_data = $result->fetch_assoc();
+
+	$hash = hash('sha256', $user_data['salt'] . hash('sha256', $password));
+	if ($hash == $user_data['password']) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
  * Logs in the specified user
  *
  * @param mysqli $mysqli an open mysqli database object
@@ -213,5 +266,14 @@ function generate_password($password)
 	$hash = hash('sha256', $salt . hash('sha256', $password));
 	return array('password' => $hash, 'salt' => $salt);
 }
+
+$MEMBER_FIELDS = array(
+	array('name' => 'email', 'type' => 'string'),
+	array('name' => 'first_name', 'type' => 'string'),
+	array('name' => 'last_name', 'type' => 'string'),
+	array('name' => 'phone', 'type' => 'string'),
+	array('name' => 'password', 'type' => 'string'),
+	array('name' => 'salt', 'type' => 'string'),
+);
 
 ?>
