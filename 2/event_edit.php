@@ -53,8 +53,8 @@ foreach ($EVENT_FIELDS as $item) {
 $set = db_get_set_statement($mysqli, $found);
 $query = 'UPDATE events SET ' . $set . ' WHERE event_id=' . $event_id . ';';
 if (!$mysqli->query($query)) {
-	Log::insert($mysqli, Log::error_mysql, $event_id, NULL, $mysqli->error);
-	$response->add_item('msg', 'error updating event' . $mysqli->error);
+	Log::insert($mysqli, Log::error_mysql, NULL, $event_id, $mysqli->error);
+	$response->add_item('msg', 'error updating event');
 	goto end;
 }
 

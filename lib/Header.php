@@ -113,6 +113,7 @@ class Header {
 			            " <b class='caret'></b>" . '</a>';
 			$content .= "<ul class='dropdown-menu'>";
 			$content .= "<li><a href='hours.php'>My Hours</a></li>";
+			$content .= "<li><a href='member_change_password.php'>Change Password</a></li>";
 			$content .= "<li><a href='logout.php'>Logout</a></li>";
 			$content .= '</ul></li>'; //.dropdown .dropdown-menu
 			$content .= '</ul>';
@@ -148,7 +149,7 @@ class Header {
 			echo "<script type='text/javascript' src='$scriptLoc'></script>";
 		}
 
-		if($this->_js) {
+		if($this->_js || $this->_js_vars) {
 			echo "<script type='text/javascript'>";
 			foreach ($this->_js as $js) {
 				echo $js;

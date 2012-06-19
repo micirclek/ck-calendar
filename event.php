@@ -6,8 +6,10 @@ require_once(BASE_PATH . '/lib/user.php');
 require_once(BASE_PATH . '/lib/event.php');
 require_once(BASE_PATH . '/lib/form.php');
 
-if (!array_key_exists('event_id', $_GET))
-	die();
+if (!array_key_exists('event_id', $_GET)) {
+	echo "<p>No event id specified</p>";
+	goto end;
+}
 $event_id = intval($_GET['event_id']);
 if (isset($_SESSION['user_id'])) {
 	$user_id = $_SESSION['user_id'];
@@ -319,7 +321,6 @@ echo "</div>"; //.row
 $header->include_js("$('#tabs a').click(function (e) { e.preventDefault(); $(this).tab('show'); });");
 
 end:
-
 $header->render_foot();
 
 ?>

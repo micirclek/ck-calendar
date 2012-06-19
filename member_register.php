@@ -38,10 +38,11 @@ $form_info = array(
 
 echo form_construct($form_info);
 ?>
-		<div class='form-actions'>
-			<button type='submit' class='btn btn-primary'>Register</button>
-		</div>
-	</form>
+			<div class='form-actions'>
+				<button type='submit' class='btn btn-primary'>Register</button>
+			</div>
+		</form>
+	</div>
 </div>
 
 <?php
