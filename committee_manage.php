@@ -26,7 +26,7 @@ if (!isset($_SESSION['user_id']) ||
 <div class="row">
 	<div class="span6">
 <?php
-$query = "SELECT committee_id, name, access_chair, access_member FROM committees;";
+$query = "SELECT committee_id, name, access_chair, access_member FROM committees ORDER BY name;";
 if (!($result = $mysqli->query($query))) {
 	Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
 	echo "<p>Could not retrieve current committee information</p>";
