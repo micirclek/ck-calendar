@@ -49,9 +49,6 @@ while ($row = $result->fetch_assoc()) {
 echo '</tbody>';
 echo '</table>';
 ?>
-		<div class='form-actions'>
-			<button type="button" class="btn btn-success">Add Committee</button>
-		</div>
 	</div>
 	<div class="span6">
 		<form class="form-horizontal" id="committee-manage-form" action="2/error.php" method="post">
