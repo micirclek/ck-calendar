@@ -14,7 +14,7 @@ $header->include_style('form');
 $header->render_head();
 
 if (!isset($_SESSION['user_id'])) {
-	echo "<p>You are already logged in and registered</p>";
+	echo "<p>You must be logged in to access this page</p>";
 	goto end;
 }
 

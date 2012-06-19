@@ -108,6 +108,19 @@ class Header {
 		if (!empty($_SESSION['user_id'])) {
 			$content .= "<ul class='nav pull-right'>";
 
+			$manage_items = '';
+			if ($_SESSION['access_level'] >= $config->get('access_manage_committees', ACCESS_EBOARD)) {
+				$manage_items .= '<li><a href="committee_manage.php">Manage Committees</a></li>';
+			}
+
+			if ($manage_items) {
+				$content .= '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">' .
+				            'Management <b class="caret"></b></a>';
+				$content .= '<ul class="dropdown-menu">';
+				$content .= $manage_items;
+				$content .= '</ul></li>';
+			}
+
 			$content .= "<li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'>" .
 			            $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] .
 			            " <b class='caret'></b>" . '</a>';
@@ -116,6 +129,7 @@ class Header {
 			$content .= "<li><a href='member_change_password.php'>Change Password</a></li>";
 			$content .= "<li><a href='logout.php'>Logout</a></li>";
 			$content .= '</ul></li>'; //.dropdown .dropdown-menu
+
 			$content .= '</ul>';
 		} else {
 			$this->include_script('login');
@@ -149,20 +163,16 @@ class Header {
 			echo "<script type='text/javascript' src='$scriptLoc'></script>";
 		}
 
-		if($this->_js || $this->_js_vars) {
-			echo "<script type='text/javascript'>";
-			foreach ($this->_js as $js) {
-				echo $js;
-			}
-			if ($this->_js_vars) {
-				echo 'var Globals = {';
-				foreach ($this->_js_vars as $name => $value) {
-					echo $name . ':' . $value . ',';
-				}
-				echo '};';
-			}
-			echo '</script>';
+		echo "<script type='text/javascript'>";
+		foreach ($this->_js as $js) {
+			echo $js;
 		}
+		echo 'var Globals = {';
+		foreach ($this->_js_vars as $name => $value) {
+			echo $name . ':' . $value . ',';
+		}
+		echo '};';
+		echo '</script>';
 
 		echo '</body>';
 		echo '</html>';
@@ -214,6 +224,7 @@ class Header {
 		'form' => 'js/form.min.js',
 		'event' => 'js/event.min.js',
 		'member' => 'js/member.min.js',
+		'committee' => 'js/committee.min.js',
 	);
 
 	//A table of shortcut names matched to the location of a css file

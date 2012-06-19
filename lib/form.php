@@ -94,4 +94,13 @@ function form_construct($form_info, $saved = NULL)
 	return $form;
 }
 
+$ACCESS_LEVELS = array(
+	ACCESS_REGISTERED => 'Registered',
+	ACCESS_MEMBER => 'Member',
+	ACCESS_COMMITTEE => 'Committee Member',
+	ACCESS_CHAIRPERSON => 'Committee Chairperson',
+	ACCESS_EBOARD => 'E-Board Member',
+	ACCESS_SUPER => 'Super User',
+);
+
 ?>

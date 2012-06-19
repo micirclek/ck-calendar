@@ -28,6 +28,10 @@ class Log {
 	const member_delete          = 203;
 	const member_change_pw       = 204;
 
+	//committee events
+	const committee_add          = 251;
+	const committee_edit         = 252;
+
 	/**
 	 * inserts an item into the log
 	 *
