@@ -41,6 +41,14 @@ if (isset($_POST['pass_a']) && isset($_POST['pass_b']) && isset($_POST['pass_old
 	$_POST['salt'] = $pass_arr['salt'];
 }
 
+//if editing another user, specifying the password once is enough
+if (isset($_POST['password']) && array_key_exists('user_id', $_POST)) {
+	$pass_arr = generate_password($_POST['password']);
+
+	$_POST['password'] = $pass_arr['password'];
+	$_POST['salt'] = $pass_arr['salt'];
+}
+
 $found = array();
 foreach ($MEMBER_FIELDS as $item) {
 	if (array_key_exists($item['name'], $_POST)) {

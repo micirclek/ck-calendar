@@ -27,6 +27,10 @@ $(document).ready(function() {
 		);
 	});
 
+	$('input[type=date]').each(function() {
+		$(this).datepicker({dateFormat: 'yy-mm-dd'});
+	});
+
 	$('input.user-input').each(function() {
 		var _this = $(this)
 		var _that;
@@ -36,7 +40,7 @@ $(document).ready(function() {
 			.attr('name', _this.attr('name') + '-text')
 			.autocomplete({
 				source: function(request, callback) {
-					$.get('2/user_list.php', request, function(response) {
+					$.get('2/member_list.php', request, function(response) {
 						if (response.status === 'success') {
 							return callback(response.payload.suggestions);
 						} else {
@@ -51,7 +55,7 @@ $(document).ready(function() {
 				}
 			})
 		));
-		$.get('2/user_get.php', {user_id: _this.val()}, function(response) {
+		$.get('2/member_get.php', {user_id: _this.val()}, function(response) {
 			if (response.status === 'success') {
 				_that.val(response.payload.user_data.email);
 			}

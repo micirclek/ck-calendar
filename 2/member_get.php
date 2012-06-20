@@ -38,6 +38,21 @@ if ($result->num_rows != 1) {
 }
 
 $response->add_item('user_data', $result->fetch_assoc());
+
+$query = "SELECT year, date_paid, committee_id, committee_position, access_level
+          FROM users_yearly WHERE user_id=" . $user_id . ' ORDER BY year;';
+$result = $mysqli->query($query);
+if ($result) {
+	$yearly = array();
+	while ($row = $result->fetch_assoc()) {
+		$yearly[$row['year']] = $row;
+	}
+	$response->add_item('user_yearly', $yearly);
+} else {
+	Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
+	$response->add_item('user_yearly', array());
+}
+
 $response->set_status('success');
 
 end:
