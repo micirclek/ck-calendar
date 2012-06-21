@@ -276,4 +276,13 @@ $MEMBER_FIELDS = array(
 	array('name' => 'salt', 'type' => 'string'),
 );
 
+$MEMBER_YEARLY_FIELDS = array(
+	array('name' => 'user_id', 'type' => 'user'),
+	array('name' => 'year', 'type' => 'int'),
+	array('name' => 'date_paid', 'type' => 'string_n'),
+	array('name' => 'committee_id', 'type' => 'committee'),
+	array('name' => 'committee_position', 'type' => 'string'),
+	array('name' => 'access_level', 'type' => 'int_n'),
+);
+
 ?>
