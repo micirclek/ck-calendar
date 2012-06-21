@@ -33,6 +33,11 @@ if (user_authenticate($mysqli, $user_id, $password)) {
 	}
 	$response->set_status('success');
 }
+else
+{
+	$response->add_item('msg', 'invalid email or password');
+	goto end;
+}
 
 end:
 echo $response->emit();
