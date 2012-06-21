@@ -55,6 +55,7 @@ function form_construct($form_info, $saved = NULL)
 			case 'password':
 			case 'number':
 			case 'datetime-local':
+			case 'date':
 				$form .= "<input name='" . $item['name'] . "' type='" . $item['type'] . "'";
 				if ($saved && array_key_exists('options', $item)) {
 					foreach ($item['options'] as $key => $val) {
@@ -66,6 +67,9 @@ function form_construct($form_info, $saved = NULL)
 					switch ($item['type']) {
 						default:
 							$form .= htmlspecialchars($saved[$item['name']], ENT_QUOTES);
+							break;
+						case 'date':
+							$form .= date(DISPLAY_DATE_FMT, $saved[$item['name']]);
 							break;
 						case 'datetime-local':
 							$form .= date(DISPLAY_DATE_FMT . ' ' . DISPLAY_TIME_FMT, $saved[$item['name']]);

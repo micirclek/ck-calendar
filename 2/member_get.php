@@ -23,7 +23,7 @@ if ($_SESSION['access_level'] < $config->get('access_view_members', ACCESS_MEMBE
 	goto end;
 }
 
-$query = "SELECT CONCAT(first_name, ' ', last_name) AS name, email, phone
+$query = "SELECT first_name, last_name, email, phone
           FROM users WHERE user_id=$user_id;";
 if (!($result = $mysqli->query($query))) {
 	Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);

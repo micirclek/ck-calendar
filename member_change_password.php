@@ -19,7 +19,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if (isset($_GET['user_id'])) {
-	if ($_SESSION['access_level'] >= $config->get('access_edit_member', ACCESS_CHAIRPERSON)) {
+	if ($_SESSION['access_level'] >= $config->get('access_manage_members', ACCESS_CHAIRPERSON)) {
 		$user_id = intval($_GET['user_id']);
 	} else {
 		echo "<p>Insufficient access to edit another member</p>";

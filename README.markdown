@@ -16,15 +16,17 @@ should be passed an array which can contain any of the following options:
 *  db_name (required): name of mysql database
 *  club_name (required): name of the club
 *  cookie_name: name for the persistent login cookie
+*  access_add_event: the access level required to add an event
+*  access_edit_event: the access level required to edit an event
 *  access_view_signup: the access level required to view event signups
 *  access_edit_signups: the access level required to make changes to event
    signups
-*  access_edit_event: the access level required to edit an event
 *  access_submit_hours: the access level required to submit event hours if not
    the event manager
 *  access_edit_hours: the access level required to edit submitted hours
-*  access_add_event: the access level required to add an event
 *  access_view_members: the access level required to retrieve information on
    registered members
+*  access_manage_members: the access level required to add/edit members
+*  access_manage_committees: the access level required to add/edit committees
 *  calendar_display_moths: the number of months to display on the calendar at once
 *  year_start: the first year to show in year selection items

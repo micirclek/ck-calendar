@@ -70,12 +70,11 @@ function event_form_construct($mysqli, $saved = NULL)
 	$committees = array(NULL => 'None');
 	$result = $mysqli->query("SELECT committee_id, name FROM committees;");
 	if ($result) {
-
+		while ($row = $result->fetch_assoc()) {
+			$committees[$row['committee_id']] = $row['name'];
+		}
 	} else {
 		Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
-	}
-	while ($row = $result->fetch_assoc()) {
-		$committees[$row['committee_id']] = $row['name'];
 	}
 
 	$form_info = array(

@@ -22,7 +22,7 @@ $(document).ready(function() {
 	});
 
 	$('.edit').click(function() {
-		var row, committee_id, form;
+		var row, form;
 		row = $(this).parent('tr');
 		Globals.committee_id = row.attr('data-committee-id');
 		$('#committee-form-submit').text('Edit Committee');
