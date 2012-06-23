@@ -106,6 +106,7 @@ echo form_construct($form_info, $defaults);
 			<li>Ability to change configuration</li>
 			<li>Better member browsing</li>
 			<li>Adding members to projects/hours</li>
+			<li>Table prefixes (mysql)</li>
 		</ul>
 	</div>
 </div>

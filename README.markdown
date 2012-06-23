@@ -7,6 +7,11 @@ To view a demo of the site, please go to http://jpevarnek.net/ck-framework/.
 This may not be the latest version but should never be older than a couple
 days.
 
+To set up this website, download the source and run make to minimize the
+javascript.  Upload the files to your web host and navigate to the setup
+directory.  Give the database information (please set up a separate mysql
+database for this) and it will walk you through the rest of the setup.
+
 The configuration object should be set up using the lib/ConfigGen object.  It
 should be passed an array which can contain any of the following options:
 
@@ -30,3 +35,6 @@ should be passed an array which can contain any of the following options:
 *  access_manage_committees: the access level required to add/edit committees
 *  calendar_display_moths: the number of months to display on the calendar at once
 *  year_start: the first year to show in year selection items
+
+This file is located at include/config.php by default.  Feel free to add any of
+the configuration options to the file manually.
