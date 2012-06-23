@@ -6,6 +6,7 @@ require_once(BASE_PATH . '/lib/event.php');
 
 function show_event($data)
 {
+	$config = new Config();
 	$output = '';
 
 	$event_id = $data['event_id'];
@@ -20,6 +21,14 @@ function show_event($data)
 		$type .= ', ' . $secondary_type;
 
 	$status = event_get_status($data);
+
+	if ($status === 'closed' || $status === 'cancelled' || $status === 'pending') {
+		$access_required = $config->get('access_view_event_' . $status, ACCESS_COMMITTEE);
+		if ((!isset($_SESSION['user_id'])) ||
+		    ($_SESSION['access_level'] < $access_required)) {
+			return '';
+		}
+	}
 
 	$start_time = date(DISPLAY_TIME_FMT, strtotime($data['start_time']));
 	$end_time = date(DISPLAY_TIME_FMT, strtotime($data['end_time']));

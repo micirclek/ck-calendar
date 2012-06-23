@@ -102,6 +102,7 @@ echo form_construct($form_info, $defaults);
 			using the github issue tracker.
 		</p>
 		<ul>
+			<li>Email Notifications</li>
 			<li>More configuration options</li>
 			<li>Ability to change configuration</li>
 			<li>Better member browsing</li>
