@@ -92,7 +92,7 @@ function user_authenticate($mysqli, $user_id, $password)
  */
 function user_login($mysqli, $user_id, $persistent, $key = NULL)
 {
-	$result = $mysqli->query("SELECT first_name, last_name FROM users WHERE user_id='$user_id';");
+	$result = $mysqli->query("SELECT first_name, last_name, admin FROM users WHERE user_id='$user_id';");
 	if (!$result) {
 		Log::insert($mysql, Log::error_mysql, NULL, NULL, $mysqli->error);
 		throw new Exception('An error was encountered when retrieving your data, a bug report has been submitted');
@@ -182,6 +182,10 @@ function user_login($mysqli, $user_id, $persistent, $key = NULL)
 	$_SESSION['committee_id'] = $committee_id;
 	$_SESSION['committee_name'] = $committee_name;
 	$_SESSION['committee_position'] = $committee_position;
+
+	if ($user_info['admin'] && !$persistent) {
+		$_SESSION['access_level'] = ACCESS_SUPER;
+	}
 
 	if ($persistent) {
 		if ($key) {
@@ -274,6 +278,7 @@ $MEMBER_FIELDS = array(
 	array('name' => 'phone', 'type' => 'string'),
 	array('name' => 'password', 'type' => 'string'),
 	array('name' => 'salt', 'type' => 'string'),
+	array('name' => 'admin', 'type' => 'bool'),
 );
 
 $MEMBER_YEARLY_FIELDS = array(

@@ -15,6 +15,7 @@ CREATE TABLE users (
 	first_name VARCHAR(40) NOT NULL,
 	last_name VARCHAR(40) NOT NULL,
 	phone VARCHAR(40) NOT NULL, /* Phone number in format: "+1 (123) 456-7890" */
+	admin TINYINT(1) NOT NULL DEFAULT 0, /* forever admin */
 	PRIMARY KEY (user_id)
 ) TYPE=INNODB;
 
@@ -30,8 +31,8 @@ CREATE TABLE users_meta (
 CREATE TABLE committees (
 	committee_id INTEGER NOT NULL AUTO_INCREMENT,
 	name VARCHAR(40) NOT NULL,
-	access_chair INTEGER NOT NULL, /* access level of commmittee chair, index to Access_Levels.levelID */
-	access_member INTEGER NOT NULL, /* access level of committee member, index to Access_Levels.levelID */
+	access_chair INTEGER NOT NULL,
+	access_member INTEGER NOT NULL,
 	PRIMARY KEY (committee_id)
 ) TYPE=INNODB;
 
