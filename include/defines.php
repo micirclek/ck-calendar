@@ -1,4 +1,6 @@
 <?php
+define('CONFIG_PATH', '/include/config.php');
+
 define('SECS_IN_DAY', 60*60*24);
 define('MYSQL_DATE_FMT', 'Y-m-d');
 define('MYSQL_DATETIME_FMT', MYSQL_DATE_FMT . ' G:i:s');

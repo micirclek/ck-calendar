@@ -152,6 +152,7 @@ for ($month = 0; $month < $config->get('calendar_display_months', 1); $month++) 
 				$result = $mysqli->query($query);
 				if (!$result) {
 					Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
+					echo '</td></tr></tbody></table>';
 					echo '<p>Error: could not get event listing</p>';
 					goto end;
 				}

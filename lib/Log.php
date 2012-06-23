@@ -73,7 +73,9 @@ class Log {
 
 		$query = 'INSERT INTO log ' . db_get_insert_statement($mysqli, $keys, $data) . ';';
 		if (!$mysqli->query($query)) {
-			self::insert($mysqli, self::error_mysql, NULL, NULL, $mysqli->error);
+			if ($entry_type !== self::error_mysql) {
+				self::insert($mysqli, self::error_mysql, NULL, NULL, $mysqli->error);
+			}
 			return false;
 		}
 		return true;

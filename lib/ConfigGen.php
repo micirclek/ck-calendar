@@ -10,11 +10,12 @@ class ConfigGen { //TODO new name
 		if (is_array($data)) {
 			$this->_Data = $data;
 		} else if(is_object($data)) {
-			var_dump($data instanceof Traversable);
 			$this->_Data = array();
 			foreach($data as $key => $val) {
 				$this->_Data[$key] = $val;
 			}
+		} else if (is_null($data)) {
+			$this->_Data = array();
 		} else {
 			throw new Exception('invalid initialization data');
 		}
@@ -43,7 +44,7 @@ class ConfigGen { //TODO new name
 		foreach ($this->_Data as $key => $val) {
 			if (is_string($val)) {
 				//string value, enclose in quotes
-				$val_string = "'" . addcslashes($val, "\\'") . "'";
+				$val_string = '"' . addcslashes($val, '\"') . '"';
 			} else if(is_null($val)) {
 				$val_string = 'NULL';
 			} else if(is_bool($val)) {
@@ -63,7 +64,7 @@ class ConfigGen { //TODO new name
 
 	public function write($filename)
 	{
-		if (file_put_contents($filename, $this->get_text()) === false)
+		if (@file_put_contents($filename, $this->get_text()) === false)
 		{
 			throw new Exception('error writing to file');
 		}
