@@ -55,17 +55,6 @@ echo $hours['other'];
 echo '</tbody>';
 echo '</table>';
 
-/*
-$query = "SELECT
-	eInfo.name, eInfo.date, activ.hours, eInfo.primaryType, eInfo.secondaryType
-	FROM ActivityHours AS activ
-	INNER JOIN EventInfo as eInfo USING (eventID)
-	WHERE activ.unq='$unq' AND activ.hours > 0
-	AND eInfo.date >= '$start' AND eInfo.date <= '$end'
-	ORDER BY eInfo.date;";
- */
-
-
 end:
 $header->render_foot();
 ?>
