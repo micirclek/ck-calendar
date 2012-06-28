@@ -94,7 +94,7 @@ function user_login($mysqli, $user_id, $persistent, $key = NULL)
 {
 	$result = $mysqli->query("SELECT first_name, last_name, admin FROM users WHERE user_id='$user_id';");
 	if (!$result) {
-		Log::insert($mysql, Log::error_mysql, NULL, NULL, $mysqli->error);
+		Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
 		throw new Exception('An error was encountered when retrieving your data, a bug report has been submitted');
 	}
 	$user_info = $result->fetch_assoc();
