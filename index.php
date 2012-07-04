@@ -138,6 +138,7 @@ for ($month = 0; $month < $config->get('calendar_display_months', 1); $month++) 
 	}
 
 	echo "</thead>";
+	echo '<tbody>';
 
 	$time = strtotime('-' . date('w', $month_time) . 'days', $month_time);
 	while ($time < $next_time) {
@@ -149,31 +150,21 @@ for ($month = 0; $month < $config->get('calendar_display_months', 1); $month++) 
 				echo "<td class='day'>";
 				echo "<div class='dayHeader'>", date('j', $time), '</div>';
 
-				$query = "SELECT
-				          event_id, status, name, creator, leader, capacity, location,
-				          start_time, end_time, committee_id, primary_type, secondary_type,
-				          suc.signups, suc.seats
-				          FROM events
-				          LEFT JOIN (SELECT COUNT(*) AS signups, SUM(seats) AS seats, event_id
-				                     FROM signups GROUP BY event_id) AS suc USING(event_id)
-				          WHERE DATE(start_time) = '" . date(MYSQL_DATE_FMT, $time) . "'
-				          ORDER BY start_time, name;";
-				$result = $mysqli->query($query);
-				if (!$result) {
-					Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
+				$events = event_list_date($mysqli, $time);
+				if ($events === false) {
 					echo '</td></tr></tbody></table>';
 					echo '<p>Error: could not get event listing</p>';
 					goto end;
 				}
-				while($row = $result->fetch_assoc()) {
-					echo show_event($row);
+				foreach ($events as $event) {
+					echo show_event($event);
 				}
-				$result->free();
 
 				echo '</td>'; //.date
 			}
 		} //end week loop
 	} //end month loop
+	echo '</tbody></table>';
 } //end calendar
 
 echo "</div></div>";

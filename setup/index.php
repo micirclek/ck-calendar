@@ -39,7 +39,7 @@ if (is_file(BASE_PATH . CONFIG_PATH)) {
 	<div class="span5">
 		<h2>Contact Information</h2>
 		<p>
-			If you ever need help with this feel free to contact the Michigan
+			If you ever need help with the calendar feel free to contact the Michigan
 			District of Circle K (<a href="http://micirclek.org">micirclek.org</a>).
 			The code for this framework is maintained on github at
 			<a href="https://github.com/jpevarnek/ck-calendar">github.com/jpevarnek/ck-framework</a>,

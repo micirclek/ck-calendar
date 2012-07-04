@@ -1,6 +1,66 @@
 <?php
 
 /**
+ * retrieves information on all events filtered by the given where clause
+ *
+ * @param mysqli $mysqli the database connection
+ * @param string $where the where clause to filter with
+ * @return array an array of event data or false on failure
+ */
+function __event_list($mysqli, $where)
+{
+	$query = 'SELECT
+	          event_id, status, name, creator, leader, capacity, location,
+	          start_time, end_time, committee_id, primary_type, secondary_type,
+	          suc.signups, suc.seats
+	          FROM events
+	          LEFT JOIN (SELECT COUNT(*) AS signups, SUM(seats) AS seats, event_id
+	                     FROM signups GROUP BY event_id) AS suc USING(event_id)
+	          WHERE ' . $where . ' ORDER BY start_time, name;';
+	if (!($result = $mysqli->query($query))) {
+		Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->query);
+		return false;
+	}
+
+	$ret = array();
+
+	while ($row = $result->fetch_assoc()) {
+		$ret[] = $row;
+	}
+
+	return $ret;
+}
+
+/**
+ * retrieves information on all the events on a specified date
+ *
+ * @param mysqli $mysqli the database connecton
+ * @param int $data a unix timestamp within the specified date
+ * @return array an array of events or false on failure
+ */
+function event_list_date($mysqli, $date)
+{
+	$where = 'DATE(start_time) = \'' . date(MYSQL_DATE_FMT, $date) . '\'';
+	return __event_list($mysqli, $where);
+}
+
+/**
+ * retrieves information on all the events within a specified time range
+ *
+ * @param mysqli $mysqli the database connection
+ * @param int $start the unix timestamp for when the range begins
+ * @param int $end the unix timestamp for when the range ends
+ * @return array an array of event data
+ */
+function event_list_range($mysqli, $start, $end)
+{
+	$where = 'start_time>=\'' . date(MYSQL_DATETIME_FMT, $start) . '\' AND
+	          start_time<=\'' . date(MYSQL_DATETIME_FMT, $end) . '\' AND
+	          end_time<=\'' . date(MYSQL_DATETIME_FMT, $end) . '\'';
+	return __event_list($mysqli, $where);
+}
+
+/**
  * retrieves an array with information describing an event
  *
  * @param mysqli $mysqli the database connection
