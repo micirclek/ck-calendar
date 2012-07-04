@@ -1,5 +1,7 @@
 <?php
 
+require_once(BASE_PATH . '/include/event.php');
+
 /**
  * retrieves information on all events filtered by the given where clause
  *
@@ -161,22 +163,27 @@ function event_form_construct($mysqli, $saved = NULL)
 	return form_construct($form_info, $saved);
 }
 
-$EVENT_FIELDS = array(
-	array('name' => 'name', 'type' => 'string'),
-	array('name' => 'description', 'type' => 'string'),
-	array('name' => 'status', 'type' => 'string'),
-	array('name' => 'creator', 'type' => 'user'),
-	array('name' => 'leader', 'type' => 'user'),
-	array('name' => 'capacity', 'type' => 'int_n'),
-	array('name' => 'start_time', 'type' => 'datetime'),
-	array('name' => 'end_time', 'type' => 'datetime'),
-	array('name' => 'meeting_location', 'type' => 'string'),
-	array('name' => 'location', 'type' => 'string'),
-	array('name' => 'driver_needed', 'type' => 'bool'),
-	array('name' => 'primary_type', 'type' => 'string'),
-	array('name' => 'secondary_type', 'type' => 'string_n'),
-	array('name' => 'committee_id', 'type' => 'committee'),
-);
+function event_add_signups($mysqli, $event_id, $signups)
+{
+	global $SIGNUP_FIELDS;
+	if (count($signups) == 0)
+		return true;
+	foreach ($signups as $key => $val) {
+		$signups[$key]['event_id'] = $event_id;
+	}
+	$query = 'INSERT INTO signups ' .
+	         db_get_insert_statement($mysqli, $SIGNUP_FIELDS, $signups) . ';';
+	if (!($mysqli->query($query))) {
+		Log::insert($mysqli, Log::error_mysql, $event_id, $signups[0]['user_id'],
+		            $mysqli->error);
+		return false;
+	}
 
+	foreach ($signups as $signup) {
+		Log::insert($mysqli, Log::signup_add, $val['user_id'], $event_id, NULL);
+	}
+
+	return true;
+}
 
 ?>

@@ -20,12 +20,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $event_id = intval($_POST['event_id']);
-$notes = $mysqli->real_escape_string($_POST['notes']);
-$seats = (isset($_POST['seats']) && $_POST['seats']) ? intval($_POST['seats']) : 'NULL';
+$notes = $_POST['notes'];
+$seats = (isset($_POST['seats']) && $_POST['seats']) ? $_POST['seats'] : NULL;
 
 $event_data = event_get_data($mysqli, $event_id);
-if ($event_data === false)
-{
+if ($event_data === false) {
 	$response->add_item('msg', 'error retrieving event data');
 	goto end;
 }
@@ -62,16 +61,16 @@ if ($result->num_rows) {
 	goto end;
 }
 
-$query = 'INSERT INTO signups (event_id, user_id, notes, seats) VALUES (' .
-         $event_id . ',' . $user_id . ',\'' . $notes . '\',' . $seats . ');';
-if (!$mysqli->query($query)) {
-	Log::insert($mysqli, Log::error_mysql, $event_id, $user_id, $mysqli->error);
+$signups = array(
+	array('user_id' => $user_id, 'notes' => $notes, 'seats' => $seats)
+);
+
+if (!event_add_signups($mysqli, $event_id, $signups)) {
 	$response->set_status('error');
-	$response->add_item('msg', 'could not sign you up for the event' . $query);
+	$response->add_item('msg', 'could not add user to the event');
 	goto end;
 }
 
-Log::insert($mysqli, Log::signup_add, $user_id, $event_id, NULL);
 $response->set_status('success');
 
 end:
