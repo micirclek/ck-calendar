@@ -26,6 +26,10 @@ class Response {
 
 	public function emit()
 	{
+		$ret = json_encode($this->_response);
+		if (isset($_GET['callback'])) {
+			$ret = $_GET['callback'] . '(' . $ret . ');';
+		}
 		return json_encode($this->_response);
 	}
 
