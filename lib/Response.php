@@ -30,7 +30,7 @@ class Response {
 		if (isset($_GET['callback'])) {
 			$ret = $_GET['callback'] . '(' . $ret . ');';
 		}
-		return json_encode($this->_response);
+		return $ret;
 	}
 
 	private $_response;
