@@ -163,27 +163,41 @@ function event_form_construct($mysqli, $saved = NULL)
 	return form_construct($form_info, $saved);
 }
 
-function event_add_signups($mysqli, $event_id, $signups)
+/**
+ * add a signup to an event
+ *
+ * @param mysqli $mysqli a database object
+ * @param int $event_id the id for the event
+ * @param int $user_id the id for the user to add
+ * @param string $notes the user's signup notes
+ * @param int $seats how many people the user can drive
+ * @return int signup_id on success, false on failure
+ */
+function event_signup_add($mysqli, $event_id, $user_id, $notes, $seats = NULL)
 {
 	global $SIGNUP_FIELDS;
-	if (count($signups) == 0)
-		return true;
-	foreach ($signups as $key => $val) {
-		$signups[$key]['event_id'] = $event_id;
-	}
+
+	$data = array(
+		array(
+			'event_id' => $event_id,
+			'user_id' => $user_id,
+			'notes' => $notes,
+			'setas' => $seats,
+		)
+	);
+
 	$query = 'INSERT INTO signups ' .
-	         db_get_insert_statement($mysqli, $SIGNUP_FIELDS, $signups) . ';';
+	         db_get_insert_statement($mysqli, $SIGNUP_FIELDS, $data) . ';';
 	if (!($mysqli->query($query))) {
 		Log::insert($mysqli, Log::error_mysql, $event_id, $signups[0]['user_id'],
 		            $mysqli->error);
 		return false;
 	}
+	$signup_id = $mysqli->insert_id;
 
-	foreach ($signups as $signup) {
-		Log::insert($mysqli, Log::signup_add, $val['user_id'], $event_id, NULL);
-	}
+	Log::insert($mysqli, Log::signup_add, $user_id, $event_id, NULL);
 
-	return true;
+	return $signup_id;
 }
 
 ?>

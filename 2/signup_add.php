@@ -48,7 +48,7 @@ if ($status !== 'open' && !$edit_signups) {
 }
 
 $result = $mysqli->query('SELECT signup_id FROM signups WHERE event_id=' .
-                         $event_id . " AND user_id=" . $user_id . ';');
+                         $event_id . ' AND user_id=' . $user_id . ';');
 if (!$result) {
 	Log::insert($mysqli, Log::error_mysql, $event_id, $user_id, $mysqli->error);
 	$response->add_item('msg', 'could not retrieve past signup information');
@@ -62,16 +62,17 @@ if ($result->num_rows) {
 }
 
 $signups = array(
-	array('user_id' => $user_id, 'notes' => $notes, 'seats' => $seats)
+	array('user_id' => $user_id, 'seats' => $seats, 'notes' => $notes)
 );
 
-if (!event_add_signups($mysqli, $event_id, $signups)) {
+if (($signup_id = event_signup_add($mysqli, $event_id, $user_id, $notes, $seats)) === false) {
 	$response->set_status('error');
 	$response->add_item('msg', 'could not add user to the event');
 	goto end;
 }
 
 $response->set_status('success');
+$response->add_item('signup_id', $signup_id);
 
 end:
 
