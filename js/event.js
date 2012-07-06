@@ -89,7 +89,31 @@ $(document).ready(function() {
 		});
 	}
 
-	$('.remove').click(function() {
+	$('form#signup-add').ajaxForm({
+		dataType: 'json',
+		success: function(response, status, xhr, $form) {
+			if (response.status === 'success' || response.sstatus === 'warning') {
+				$.get('2/member_get.php', {user_id: $form.find('[name=user_id]').val()}, function(user_response) {
+					var row, col_count;
+					row = $('<tr>').attr('id', 'signup-' + response.payload.signup_id)
+						.append($('<td>').text(user_response.payload.user_data.first_name + ' ' + user_response.payload.user_data.last_name))
+						.append($('<td>').text(user_response.payload.user_data.email))
+						.append($('<td>').text(user_response.payload.user_data.phone))
+						.append($('<td>').text($form.find('[name=notes]').val()));
+					if ($('#signups thead tr th').length > 5) {
+						row.append($('<td>').text($form.find('[name=seats]').val()));
+					}
+					row.append($('<td>').addClass('remove').append($('<i>').addClass('icon-remove')));
+					$('#signups tbody').append(row);
+				}, 'json');
+			} else {
+				alert(response.payload.msg);
+			}
+		},
+		beforeSubmit: add_event_id
+	});
+
+	$(document).on('click', '.remove', function() {
 		var data, row, target, post_data, reload;
 		row = $(this).parent('tr');
 		data = /([a-z]+)-([0-9]+)/.exec(row.attr('id'));

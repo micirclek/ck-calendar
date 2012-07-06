@@ -109,7 +109,7 @@ echo '</dl>';
 
 if (isset($_SESSION['user_id']) && $_SESSION['access_level'] >= $config->get('access_view_signups', ACCESS_MEMBER)) {
 	echo "<h2>Event Signups</h2>";
-	echo "<table class='table'>";
+	echo '<table class="table" id="signups">';
 	echo "<thead><tr><th>Name</th><th>Email</th><th>Phone</th>";
 	if ($event_data['driver_needed']) {
 		echo '<th>Seats</th>';
@@ -118,7 +118,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['access_level'] >= $config->get('ac
 	if ($edit_signups) {
 		echo "<th>Remove</th>";
 	}
-	echo "</tr></thead>";
+	echo '</tr></thead><tbody>';
 
 	$query = "SELECT signup_id, user_id, notes, seats,
 	          CONCAT(first_name, ' ', last_name) AS name, email, phone
@@ -145,8 +145,23 @@ if (isset($_SESSION['user_id']) && $_SESSION['access_level'] >= $config->get('ac
 			echo $row_content;
 		}
 	}
-	//TODO have the ability to add signups
-	echo "</table>";
+	echo '</tbody>';
+	echo '</table>';
+
+	$form_info = array(
+		array('name' => 'user_id', 'title' => 'User', 'type' => 'user'),
+		array('name' => 'notes', 'title' => 'Notes', 'type' => 'textarea'),
+	);
+	if ($event_data['driver_needed']) {
+		$form_info[] = array('name' => 'seats', 'title' => 'Seats', 'type' => 'number');
+	}
+
+	echo '<form class="form-horizontal" id="signup-add" action="2/signup_add.php" method="post">';
+	echo form_construct($form_info);
+	echo '<div class="form-actions">';
+	echo '<button type="submit" class="btn btn-primary">Add signup</button>';
+	echo '</div>';
+	echo '</form>';
 }
 
 echo "</div>"; //.span6
