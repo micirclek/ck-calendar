@@ -24,10 +24,19 @@ if (($events = event_list_range($mysqli, $start, $end)) === false) {
 $ret = array();
 
 foreach ($events as $event) {
+	$status = event_get_status($event);
+	if ($status === 'pending' || $status === 'closed' || $status === 'cancelled') {
+		$access_required = $config->get('access_view_event_' . $status, ACCESS_COMMITTEE);
+		if ((!isset($_SESSION['user_id'])) ||
+		    ($_SESSION['access_level'] < $access_required)) {
+			continue; //skip events user does not have access to
+		}
+	}
+
 	$ret[] = array(
 		'event_id' => $event['event_id'],
 		'name' => $event['name'],
-		'status' => event_get_status($event),
+		'status' => $status,
 		'start_time' => $event['start_time'],
 		'end_time' => $event['end_time'],
 		'primary_type' => $event['primary_type'],
