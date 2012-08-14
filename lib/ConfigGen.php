@@ -23,14 +23,33 @@ class ConfigGen { //TODO new name
 
 	public function set($key, $val)
 	{
-		if (is_array($val)) {
-			throw new Exception('only simple types are supported');
-		} else if(is_object($val) || is_resource($val)) {
+		if(is_object($val) || is_resource($val)) {
 			throw new Exception('only simple types are supported');
 		} else if(is_callable($val)) {
 			throw new Exception('only simple types are supported');
 		} else {
 			$this->_Data[$key] = $val;
+		}
+	}
+
+	private static function get_field($field, $simple = false)
+	{
+		if (is_string($field)) {
+			return '\'' . addcslashes($field, '\'') . '\'';
+		} else if (is_null($field)) {
+			return 'NULL';
+		} else if (is_bool($field)) {
+			return ($field) ? 'true' : 'false';
+		} else if (is_array($field)) {
+			$val_string = 'array(';
+			var_dump($field);
+			foreach ($field as $key => $val) {
+				$val_string .= self::get_field($key) . ' => ' . self::get_field($val) . ',';
+			}
+			$val_string .= ')';
+			return $val_string;
+		} else {
+			return $field;
 		}
 	}
 
@@ -42,17 +61,7 @@ class ConfigGen { //TODO new name
 		           '{return (isset($this->$name))?$this->$name:$default;}' . "\n";
 
 		foreach ($this->_Data as $key => $val) {
-			if (is_string($val)) {
-				//string value, enclose in quotes
-				$val_string = '"' . addcslashes($val, '\"') . '"';
-			} else if(is_null($val)) {
-				$val_string = 'NULL';
-			} else if(is_bool($val)) {
-				$val_string = ($val)?'true':'false';
-			} else {
-				//other values should be fine
-				$val_string = $val;
-			}
+			$val_string = self::get_field($val);
 
 			$string .= "\t" . 'public $' . $key . ' = ' . $val_string . ";\n";
 		}
