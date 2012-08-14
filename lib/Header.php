@@ -105,6 +105,14 @@ class Header {
 		$content .= "<div class='navbar navbar-fixed-top'><div class='navbar-inner'><div class='container'>";
 		$content .= "<a class='brand' href='index.php'>" .
 		            $config->get('club_name', 'Circle K') . '</a>';
+		$navbar_links = $config->get('navbar_links', array());
+		if (count($navbar_links) > 0) {
+			$content .= '<ul class="nav pull-left">';
+			foreach ($navbar_links as $text => $url) {
+				$content .= '<li><a href="' . $url . '">' . $text . '</a></li>';
+			}
+			$content .= '</ul>';
+		}
 		if (!empty($_SESSION['user_id'])) {
 			$content .= "<ul class='nav pull-right'>";
 
@@ -147,8 +155,6 @@ class Header {
 		$content .= "</div></div></div>"; //.container .navbar-inner navbar
 
 		$content .= "<div class='container'>";
-
-//		$content .= "<div class='well'>" . var_export($_SESSION, true) . '</div>';
 
 		echo $content;
 	}

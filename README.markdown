@@ -35,6 +35,8 @@ should be passed an array which can contain any of the following options:
 *  access_manage_committees: the access level required to add/edit committees
 *  calendar_display_moths: the number of months to display on the calendar at once
 *  year_start: the first year to show in year selection items
+*  navbar_links: an array of links to be shown in the navbar.  The array keys
+   should be the link text with the values as the urls
 
 This file is located at include/config.php by default.  Feel free to add any of
 the configuration options to the file manually.
