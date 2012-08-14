@@ -34,7 +34,7 @@ $query = 'CREATE TABLE users (
 	phone VARCHAR(40) NOT NULL,
 	admin TINYINT(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY (user_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up user table');
 	goto end;
@@ -46,7 +46,7 @@ $query = 'CREATE TABLE users_meta (
 	field_value VARCHAR(40) NOT NULL,
 	PRIMARY KEY (user_id, field_name),
 	FOREIGN KEY (user_id) REFERENCES users(user_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up meta table');
 	goto end;
@@ -58,7 +58,7 @@ $query = 'CREATE TABLE committees (
 	access_chair INTEGER NOT NULL,
 	access_member INTEGER NOT NULL,
 	PRIMARY KEY (committee_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up committee table');
 	goto end;
@@ -74,7 +74,7 @@ $query = 'CREATE TABLE users_yearly (
 	PRIMARY KEY (user_id, year),
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
 	FOREIGN KEY (committee_id) REFERENCES committees(committee_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up users yearly table');
 	goto end;
@@ -100,7 +100,7 @@ $query = 'CREATE TABLE events (
 	FOREIGN KEY (creator) REFERENCES users(user_id),
 	FOREIGN KEY (leader) REFERENCES users(user_id),
 	FOREIGN KEY (committee_id) REFERENCES committees(committee_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up events table');
 	goto end;
@@ -116,7 +116,7 @@ $query = 'CREATE TABLE signups (
 	UNIQUE KEY entry (event_id, user_id),
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
 	FOREIGN KEY (event_id) REFERENCES events(event_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up signups table');
 	goto end;
@@ -131,7 +131,7 @@ $query = 'CREATE TABLE hours (
 	UNIQUE KEY entry (event_id, user_id),
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
 	FOREIGN KEY (event_id) REFERENCES events(event_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up hours table');
 	goto end;
@@ -142,7 +142,7 @@ $query = 'CREATE TABLE session_keys (
 	session_key CHAR(64) NOT NULL,
 	expiration DATETIME NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(user_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up a session key table');
 	goto end;
@@ -162,7 +162,7 @@ $query = 'CREATE TABLE log (
 	PRIMARY KEY (log_id),
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
 	FOREIGN KEY (user_id_action) REFERENCES users(user_id)
-) TYPE=INNODB;';
+) ENGINE=INNODB;';
 if (!$mysqli->query($query)) {
 	$response->add_item('msg', 'could not set up log table');
 	goto end;
