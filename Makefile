@@ -6,7 +6,7 @@ all: build
 
 build: js/login.min.js js/event.min.js js/calendar.min.js
 build: js/form.min.js js/member.min.js js/committee.min.js
-build: setup/js/setup.min.js
+build: js/global.min.js setup/js/setup.min.js
 build: css/calendar.min.css css/form.min.css
 
 %.min.css: %.css

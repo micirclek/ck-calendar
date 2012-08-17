@@ -245,6 +245,7 @@ class Header {
 	private $_script_lookup = array(
 		'jquery' => 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
 		'bootstrap' => 'js/bootstrap.min.js',
+		'global' => 'js/global.min.js',
 
 		'calendar' => 'js/calendar.min.js',
 		'login' => 'js/login.min.js',
@@ -270,7 +271,7 @@ class Header {
 
 	private $_title = '';
 	private $_doctype = '5';
-	private $_scripts = array('jquery' => 'jquery', 'bootstrap' => 'bootstrap',);
+	private $_scripts = array('jquery' => 'jquery', 'bootstrap' => 'bootstrap', 'global' => 'global');
 	private $_js = array();
 	private $_styles = array('bootstrap' => 'bootstrap',);
 	private $_js_vars = array();
