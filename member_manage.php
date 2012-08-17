@@ -56,7 +56,7 @@ $form_info = array(
 	array('name' => 'first_name', 'title' => 'First Name', 'type' => 'text'),
 	array('name' => 'last_name', 'title' => 'Last Name', 'type' => 'text'),
 	array('name' => 'email', 'title' => 'Email', 'type' => 'text'),
-	array('name' => 'password', 'title' => 'Password', 'type' => 'text'),
+	array('name' => 'pass', 'title' => 'Password', 'type' => 'text'),
 	array('name' => 'phone', 'title' => 'Phone Number', 'type' => 'text'),
 );
 

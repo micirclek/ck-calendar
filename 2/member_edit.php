@@ -46,8 +46,8 @@ if (isset($_POST['pass_a']) && isset($_POST['pass_b']) && isset($_POST['pass_old
 }
 
 //if editing another user, specifying the password once is enough (overrides other method)
-if ($member_manage && isset($_POST['password']) && $_POST['password']) {
-	$pass_arr = generate_password($_POST['password']);
+if ($member_manage && isset($_POST['pass']) && $_POST['pass']) {
+	$pass_arr = generate_password($_POST['pass']);
 
 	$_POST['password'] = $pass_arr['password'];
 	$_POST['salt'] = $pass_arr['salt'];
