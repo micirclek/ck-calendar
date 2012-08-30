@@ -43,11 +43,11 @@ if (!(isset($_POST['email']) && $_POST['email'])) {
 }
 
 if ($manage) {
-	if (!(isset($_POST['password']) && $_POST['password'])) {
+	if (!(isset($_POST['pass']) && $_POST['pass'])) {
 		$response->add_item('msg', 'password is required');
 		goto end;
 	}
-	$pass = $_POST['password'];
+	$pass = $_POST['pass'];
 } else {
 	if (!(isset($_POST['pass_a']) && isset($_POST['pass_b']) && $_POST['pass_a'] &&
 	    $_POST['pass_a'] == $_POST['pass_b'])) {
