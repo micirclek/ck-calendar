@@ -21,17 +21,35 @@
 require_once('include/init.php');
 require_once(BASE_PATH . '/lib/Log.php');
 require_once(BASE_PATH . '/lib/Header.php');
+require_once(BASE_PATH . '/lib/form.php');
 
 $header = new Header($mysqli);
 $header->add_title('View Hours');
+$header->include_script('form');
+$header->include_style('jquery-ui');
 
 $header->render_head();
 
+$manager = false;
+
 if (isset($_SESSION['user_id'])) {
-	$user_id = $_SESSION['user_id'];
+	$manager = ($_SESSION['access_level'] >= $config->get('access_view_member_hours', ACCESS_EBOARD));
+	if (isset($_GET['user_id']) && $manager) {
+		$user_id = intval($_GET['user_id']);
+	} else {
+		$user_id = $_SESSION['user_id'];
+	}
 } else {
-	echo "<p>You must be logged in to view your hours</p>";
+	echo '<p>You must be logged in to view your hours</p>';
 	goto end;
+}
+
+if ($manager) {
+	echo '<form class="form-inline well" action="" menthod="get">';
+	echo '<label class="control-label">User:</label> ';
+	echo '<input class="user-input" name="user_id" type="number" steps="1" min="1" /> ';
+	echo '<button type="submit" class="btn">Lookup Hours</button>';
+	echo '</form>';
 }
 
 $hours = array('service' => '', 'other' => '');
@@ -59,15 +77,15 @@ while ($row = $result->fetch_assoc()) {
 	                '</tr>';
 }
 
-echo "<table class='table'>";
+echo '<table class="table">';
 echo '<thead>';
 echo '<tr><th>Start</th><th>Event Name</th><th>Hours</th></tr>';
 echo '</thead>';
 echo '<tbody>';
 
-echo "<tr><th colspan='3' style='text-align: center;'>Service Hours</th></tr>";
+echo '<tr><th colspan="3" style="text-align: center;">Service Hours</th></tr>';
 echo $hours['service'];
-echo "<tr><th colspan='3' style='text-align: center;'>Other Hours</th></tr>";
+echo '<tr><th colspan="3" style="text-align: center;">Other Hours</th></tr>';
 echo $hours['other'];
 
 echo '</tbody>';
@@ -75,4 +93,3 @@ echo '</table>';
 
 end:
 $header->render_foot();
-?>

@@ -33,6 +33,8 @@ should be passed an array which can contain any of the following options:
    registered members
 *  access_manage_members: the access level required to add/edit members
 *  access_manage_committees: the access level required to add/edit committees
+*  access_view_member_hours: the access level required to view the hours of
+   other members
 *  calendar_display_moths: the number of months to display on the calendar at once
 *  year_start: the first year to show in year selection items
 *  navbar_links: an array of links to be shown in the navbar.  The array keys
