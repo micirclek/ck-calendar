@@ -53,6 +53,7 @@ if ($manager) {
 }
 
 $hours = array('service' => '', 'other' => '');
+$total = array('service' => 0, 'other' => 0);
 
 $query = 'SELECT name, start_time, end_time, primary_type, secondary_type, hours
           FROM hours INNER JOIN events USING(event_id)
@@ -75,6 +76,7 @@ while ($row = $result->fetch_assoc()) {
 	                 '<td>' . $row['name'] . '</td>' .
 	                 '<td>' . $row['hours'] . '</td>' .
 	                 '</tr>';
+	$total[$type] += $row['hours'];
 }
 
 echo '<table class="table">';
@@ -83,10 +85,11 @@ echo '<tr><th>Start</th><th>Event Name</th><th>Hours</th></tr>';
 echo '</thead>';
 echo '<tbody>';
 
-echo '<tr><th colspan="3" style="text-align: center;">Service Hours</th></tr>';
+echo '<tr><th colspan="3" style="text-align: center;">' . $total['service'] . ' Service Hours</th></tr>';
 echo $hours['service'];
-echo '<tr><th colspan="3" style="text-align: center;">Other Hours</th></tr>';
+echo '<tr><th colspan="3" style="text-align: center;">' . $total['other'] . ' Other Hours</th></tr>';
 echo $hours['other'];
+echo '<tr><th colspan="3" style="text-align: center;">' . ($total['service'] + $total['other']) . ' total hours</th></tr>';
 
 echo '</tbody>';
 echo '</table>';
