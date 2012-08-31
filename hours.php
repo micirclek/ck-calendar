@@ -70,11 +70,11 @@ while ($row = $result->fetch_assoc()) {
 		$type = 'service';
 	}
 	$time = strtotime($row['start_time']);
-	$hours[$type] = '<tr>' .
-	                '<td>' . date(DISPLAY_DATE_FMT . ' ' . DISPLAY_TIME_FMT, $time) . '</td>' .
-	                '<td>' . $row['name'] . '</td>' .
-	                '<td>' . $row['hours'] . '</td>' .
-	                '</tr>';
+	$hours[$type] .= '<tr>' .
+	                 '<td>' . date(DISPLAY_DATE_FMT . ' ' . DISPLAY_TIME_FMT, $time) . '</td>' .
+	                 '<td>' . $row['name'] . '</td>' .
+	                 '<td>' . $row['hours'] . '</td>' .
+	                 '</tr>';
 }
 
 echo '<table class="table">';
