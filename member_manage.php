@@ -35,7 +35,7 @@ $header->render_head();
 
 if (!isset($_SESSION['user_id']) ||
     $_SESSION['access_level'] < $config->get('access_manage_members', ACCESS_CHAIRPERSON)) {
-	echo "<p>Insufficient access to manage committees</p>";
+	echo "<p>Insufficient access to manage members</p>";
 	goto end;
 }
 ?>
