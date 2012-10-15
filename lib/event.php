@@ -200,7 +200,7 @@ function event_signup_add($mysqli, $event_id, $user_id, $notes, $seats = NULL)
 			'event_id' => $event_id,
 			'user_id' => $user_id,
 			'notes' => $notes,
-			'setas' => $seats,
+			'seats' => $seats,
 		)
 	);
 
