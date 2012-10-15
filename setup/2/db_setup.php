@@ -101,7 +101,7 @@ if (!$mysqli->query($query)) {
 
 $query = 'CREATE TABLE events (
 	event_id INTEGER NOT NULL AUTO_INCREMENT,
-	status ENUM(\'open\', \'closed\', \'cancelled\', \'pending\') NOT NULL DEFAULT \'pending\',
+	status ENUM(\'open\', \'closed\', \'cancelled\', \'pending\') NOT NULL DEFAULT \'open\',
 	name VARCHAR(80) NOT NULL,
 	creator INTEGER NOT NULL,
 	leader INTEGER,

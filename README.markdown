@@ -39,6 +39,7 @@ should be passed an array which can contain any of the following options:
 *  year_start: the first year to show in year selection items
 *  navbar_links: an array of links to be shown in the navbar.  The array keys
    should be the link text with the values as the urls
+*  event_default_status: the default status for an event (open, pending, etc.)
 
 This file is located at include/config.php by default.  Feel free to add any of
 the configuration options to the file manually.

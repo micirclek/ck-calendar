@@ -63,7 +63,7 @@ if (isset($_POST['status'])) {
 	goto end;
 }
 
-$_POST['status'] = 'pending';
+$_POST['status'] = $config->get('event_default_status', 'open');
 $_POST['creator'] = $_SESSION['user_id'];
 
 $query = 'INSERT INTO events ' . db_get_insert_statement($mysqli, $EVENT_FIELDS, array($_POST)) . ';';
