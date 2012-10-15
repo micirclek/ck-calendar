@@ -110,6 +110,7 @@ class Header {
 
 		$content .= "<style>body { padding-top: 60px; }</style>";
 
+		$content .= '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
 		foreach($this->_styles as $style) {
 			if(array_key_exists($style, $this->_style_lookup)) $styleLoc = $this->_style_lookup[$style];
 			else $styleLoc = $style;
@@ -131,6 +132,10 @@ class Header {
 			}
 			$content .= '</ul>';
 		}
+
+		$content .= '<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a>';
+		$content .= '<div class="nav-collapse">';
+
 		if (!empty($_SESSION['user_id'])) {
 			$content .= "<ul class='nav pull-right'>";
 
@@ -150,27 +155,30 @@ class Header {
 				$content .= '</ul></li>';
 			}
 
-			$content .= "<li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'>" .
+			$content .= '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">' .
 			            $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] .
-			            " <b class='caret'></b>" . '</a>';
-			$content .= "<ul class='dropdown-menu'>";
-			$content .= "<li><a href='hours.php'>My Hours</a></li>";
-			$content .= "<li><a href='member_change_password.php'>Change Password</a></li>";
-			$content .= "<li><a href='logout.php'>Logout</a></li>";
+			            ' <b class="caret"></b>' . '</a>';
+			$content .= '<ul class="dropdown-menu">';
+			$content .= '<li><a href="hours.php">My Hours</a></li>';
+			$content .= '<li><a href="member_change_password.php">Change Password</a></li>';
+			$content .= '<li><a href="logout.php">Logout</a></li>';
 			$content .= '</ul></li>'; //.dropdown .dropdown-menu
 
 			$content .= '</ul>';
 		} else {
 			$this->include_script('login');
-			$content .= "<div class='pull-right form-inline' id='login'>";
-			$content .= "<input id='login-email' type='text' placeholder='email' class='span2' /> ";
-			$content .= "<input id='login-pw' type='password' placeholder='password' class='span2' /> ";
-			$content .= "<label class='checkbox' style='color: #999999;'><input type='checkbox' id='login-persistent'> Remember me</label>";
-			$content .= "<button id='login-submit' type='submit' class='btn btn-primary'>Log In</button>";
-			$content .= "<a href='member_register.php'><button class='btn'>Register</button></a>";
-			$content .= '</div>';
+			$this->include_script('form');
+			$content .= '<form class="navbar-form pull-right" id="login-form" action="2/login.php" method="post">';
+			$content .= '<input name="email" type="text" placeholder="email" class="span2" /> ';
+			$content .= '<input name="password" type="password" placeholder="password" class="span2" />';
+			$content .= '<label class="checkbox inline"><input name="persistent" type="checkbox"> Remember me </label> ';
+			$content .= '<button id="login-submit" type="submit" class="btn">Log In</button> ';
+//			$content .= '<a href="member_register.php"><button class="btn">Register</button></a>';
+			$content .= '</form>';
 		}
-		$content .= "</div></div></div>"; //.container .navbar-inner navbar
+		$content .= '</div>'; //.nav-collapse
+		$content .= '</div></div></div>'; //.container .navbar-inner navbar
+
 
 		$content .= "<div class='container'>";
 

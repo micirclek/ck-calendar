@@ -35,7 +35,7 @@ $(document).ready(function() {
 		var _this = $(this)
 		var _that;
 		_this.hide();
-		_this.after((_that = $('<input>')
+		_this.after(_that = $('<input>')
 			.attr('type', 'text')
 			.attr('name', _this.attr('name') + '-text')
 			.autocomplete({
@@ -54,7 +54,7 @@ $(document).ready(function() {
 					return false;
 				}
 			})
-		));
+		);
 		$.get('2/member_get.php', {user_id: _this.val()}, function(response) {
 			if (response.status === 'success') {
 				_that.val(response.payload.user_data.email);

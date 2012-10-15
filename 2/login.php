@@ -33,7 +33,9 @@ if (!array_key_exists('email', $_POST) || !array_key_exists('password', $_POST))
 
 $email = $mysqli->real_escape_string($_POST['email']);
 $password = $_POST['password'];
-$persistent = (bool)$_POST['persistent'];
+$persistent = false;
+if (isset($_POST['persistent']) && $_POST['persistent'])
+	$persistent = true;
 
 $response = new Response();
 
