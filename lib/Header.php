@@ -167,18 +167,16 @@ class Header {
 			$content .= '</ul>';
 		} else {
 			$this->include_script('login');
-			$this->include_script('form');
-			$content .= '<form class="navbar-form pull-right" id="login-form" action="2/login.php" method="post">';
-			$content .= '<input name="email" type="text" placeholder="email" class="span2" /> ';
-			$content .= '<input name="password" type="password" placeholder="password" class="span2" />';
-			$content .= '<label class="checkbox inline"><input name="persistent" type="checkbox"> Remember me </label> ';
+			$content .= '<div class="navbar-form pull-right" id="login">';
+			$content .= '<input name="email" id="login-email" type="text" placeholder="email" class="span2" /> ';
+			$content .= '<input name="password" id="login-pw" type="password" placeholder="password" class="span2" />';
+			$content .= '<label class="checkbox inline"><input name="persistent" id="login-persistent" type="checkbox"> Remember me </label> ';
 			$content .= '<button id="login-submit" type="submit" class="btn">Log In</button> ';
-//			$content .= '<a href="member_register.php"><button class="btn">Register</button></a>';
+			$content .= '<a href="member_register.php"><button class="btn">Register</button></a>';
 			$content .= '</form>';
 		}
 		$content .= '</div>'; //.nav-collapse
 		$content .= '</div></div></div>'; //.container .navbar-inner navbar
-
 
 		$content .= "<div class='container'>";
 
