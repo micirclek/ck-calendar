@@ -196,21 +196,31 @@ echo "</div>"; //.span6
 
 echo "<div class='span6'>";
 
-echo "<ul class='nav nav-tabs' id='tabs'>";
+$tabs = '<ul class=\'nav nav-tabs\' id=\'tabs\'>';
+$tab_count = 0;
 $tab_class = 'active';
+
 if ($status === 'open') {
-	echo "<li class='$tab_class'><a href='#signup'>Signup</a></li>";
+	$tabs .= '<li class=\'' . $tab_class . '\'><a href=\'#signup\'>Signup</a></li>';
+	$tab_count++;
 	$tab_class = '';
 }
+
 if ($edit_event) {
-	echo "<li class='$tab_class'><a href='#edit'>Edit Event</a></li>";
+	$tabs .= '<li class=\'' . $tab_class . '\'><a href=\'#edit\'>Edit Event</a></li>';
+	$tab_count++;
 	$tab_class = '';
 }
+
 if ($manage_hours) {
-	echo "<li class='$tab_class'><a href='#hours'>Manage Event Hours</a></li>";
+	$tabs .= '<li class=\'' . $tab_class . '\'><a href=\'#hours\'>Manage Event Hours</a></li>';
+	$tab_count++;
 	$tab_class = '';
 }
-echo "</ul>";
+
+$tabs .= '</ul>';
+if ($tab_count > 1)
+	echo $tabs;
 
 //the actual page content
 echo "<div class='tab-content'>";
