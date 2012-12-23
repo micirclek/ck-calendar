@@ -66,6 +66,9 @@ if (isset($event_data['leader'])) {
 	$manager_email = $event_data['c_email'];
 }
 
+$manager_name = htmlspecialchars($manager_name);
+$manager_email = htmlspecialchars($manager_email);
+
 $edit_event = false;
 $manage_hours = false;
 $edit_signups = false;
@@ -75,7 +78,7 @@ if (isset($user_id)) {
 	$manage_hours = is_auth_manage_hours($_SESSION, $event_data, $event_data['hours_submitted']);
 }
 
-$description = $event_data['description'];
+$description = htmlspecialchars($event_data['description']);
 
 $status = event_get_status($event_data);
 
@@ -114,15 +117,21 @@ echo "<div class='span6'>";
 echo "<dl class='dl-horizontal'>";
 echo '<dt>Start Time</dt>' . '<dd>' .date('F j g:ia', $event_data['start_ts']) . '</dd>';
 echo '<dt>End Time</dt>' . '<dd>' . date('F j g:ia', $event_data['end_ts']) . '</dd>';
+
 if ($event_data['meeting_location'])
-	echo '<dt>Meeting Location</dt>' . '<dd>' . $event_data['meeting_location'] . '</dd>';
+	echo '<dt>Meeting Location</dt>' . '<dd>' .
+	     htmlspecialchars($event_data['meeting_location']) . '</dd>';
+
 if ($event_data['location'])
-	echo '<dt>Event Location</dt>' . '<dd>' . $event_data['location'] . '</dd>';
+	echo '<dt>Event Location</dt>' . '<dd>' .
+	     htmlspecialchars($event_data['location']) . '</dd>';
+
 echo '<dt>Site Leader</dt>' . '<dd>' . $manager_name . " (<a href='mailto:" .
      $manager_email . "'>" . $manager_email . '</a>)' . '</dd>';
-if (isset($event_data['committee_name'])) {
+
+if (isset($event_data['committee_name']))
 	echo '<dt>Committee</dt>' . '<dd>' . $event_data['committee_name'] . '</dd>';
-}
+
 echo '<dt>Event Type</dt>' . '<dd>' . $event_type . '</dd>';
 echo '</dl>';
 
@@ -150,13 +159,13 @@ if (isset($_SESSION['user_id']) && $_SESSION['access_level'] >= $config->get('ac
 		while ($row = $result->fetch_assoc()) {
 			$row_class = 'signup-row' . (($row['user_id'] == $user_id) ? ' reload' : '');
 			$row_content = "<tr id='signup-{$row['signup_id']}' class='$row_class'>";
-			$row_content .= '<td>' . $row['name'] . '</td>';
-			$row_content .= '<td>' . $row['email'] . '</td>';
-			$row_content .= '<td>' . $row['phone'] . '</td>';
+			$row_content .= '<td>' . htmlspecialchars($row['name']) . '</td>';
+			$row_content .= '<td>' . htmlspecialchars($row['email']) . '</td>';
+			$row_content .= '<td>' . htmlspecialchars($row['phone']) . '</td>';
 			if ($event_data['driver_needed']) {
 				$row_content .= '<td>' . (($row['seats'] !== NULL)?$row['seats']:'N/A') . '</td>';
 			}
-			$row_content .= '<td>' . $row['notes'] . '</td>';
+			$row_content .= '<td>' . htmlspecialchars($row['notes']) . '</td>';
 			if ($edit_signups) {
 				$row_content .= "<td class='remove'><i class='icon-remove'></i></td>";
 			}
@@ -292,10 +301,10 @@ if ($manage_hours) {
 <?php
 		while ($row = $result->fetch_assoc()) {
 			$user_id = $row['user_id'];
-  		$row_text = "<tr>";
-			$row_text .= '<td>' . $row['name'] . '</td>';
-			$row_text .= '<td>' . $row['email'] . '</td>';
-			$row_text .= '<td>' . "<input name='hours[$user_id]' class='input-small' style='margin-bottom: 0px;' />" . '</td>';
+			$row_text = "<tr>";
+			$row_text .= '<td>' . htmlspecialchars($row['name']) . '</td>';
+			$row_text .= '<td>' . htmlspecialchars($row['email']) . '</td>';
+			$row_text .= '<td>' . '<input name=\'hours[' . $user_id . ']\' class=\'input-small\' style=\'margin-bottom: 0px;\' />' . '</td>';
 			$row_text .= '</tr>';
 			echo $row_text;
 		}
@@ -332,8 +341,8 @@ finish_submit_hour_rows:
 			//TODO have the ability to edit/add rows
 			$hours_id = $row['hours_id'];
 			$row_text = "<tr id='hours-$hours_id'>";
-			$row_text .= '<td>' . $row['name'] . '</td>';
-			$row_text .= '<td>' . $row['hours'] . '</td>';
+			$row_text .= '<td>' . htmlspecialchars($row['name']) . '</td>';
+			$row_text .= '<td>' . htmlspecialchars($row['hours']) . '</td>';
 			$row_text .= "<td class='remove'><i class='icon-remove'></i></td>";
 			$row_text .= '</tr>';
 			echo $row_text;
