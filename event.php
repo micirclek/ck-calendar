@@ -323,7 +323,7 @@ finish_submit_hour_rows:
 		          WHERE event_id=" . $event_id . ';';
 		if (!($result = $mysqli->query($query))) {
 			Log::insert($mysqli, Log::error_mysql, $event_id, NULL, $mysqli->error);
-			echo '<p>There was an error retrieving hour information, the problem will be addressed and you will be contacted with more information later.</p>' . $mysqli->error . '"' . $query . '"';
+			echo '<p>There was an error retrieving hour information, the problem will be addressed and you will be contacted with more information later.</p>';
 			goto finish_hours;
 		}
 ?>
