@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('input[type=datetime-local]').each(function() {
+	$('input.datetime').each(function() {
 		var datetime;
 		$(this).hide();
 		datetime = /(\d{4}-\d{2}-\d{2}) (\d{1,2}:\d{2}(am|pm))/.exec($(this).val());
@@ -27,7 +27,7 @@ $(document).ready(function() {
 		);
 	});
 
-	$('input[type=date]').each(function() {
+	$('input.date').each(function() {
 		$(this).datepicker({dateFormat: 'yy-mm-dd'});
 	});
 

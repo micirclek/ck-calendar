@@ -41,7 +41,7 @@ function make_form_options($options, $value = NULL)
  *   user: a user
  *   text: simple text
  *   number: a number
- *   datetime-local: a local datetime
+ *   datetime: a datetime
  *   textarea: a block textarea
  *   select: a dropdown select
  * options: An array of options, the exact semantics vary based upon the type
@@ -69,34 +69,50 @@ function form_construct($form_info, $saved = NULL)
 				}
 				$form .= " />";
 				break;
+
 			case 'text':
 			case 'password':
 			case 'number':
-			case 'datetime-local':
-			case 'date':
 				$form .= "<input name='" . $item['name'] . "' type='" . $item['type'] . "'";
-				if ($saved && array_key_exists('options', $item)) {
+				if (array_key_exists('options', $item)) {
 					foreach ($item['options'] as $key => $val) {
 						$form .= $key . "='" . $val . "'";
 					}
 				}
+
+				if ($saved && array_key_exists($item['name'], $saved))
+					$form .= ' value="' . htmlspecialchars($saved[$item['name']]) . '"';
+
+				$form .= " />";
+				break;
+
+			case 'datetime':
+			case 'date':
+				$form .= '<input name="' . $item['name'] .'" type="text" class="' .
+				         $item['type'] . '"';
+
+				if ($saved && array_key_exists('options', $item)) {
+					foreach ($item['options'] as $key => $val) {
+						$form .= $key . '="' . $val . '"';
+					}
+				}
+
 				if ($saved && array_key_exists($item['name'], $saved)) {
-					$form .= " value='";
+					$form .= ' value="';
 					switch ($item['type']) {
-						default:
-							$form .= htmlspecialchars($saved[$item['name']], ENT_QUOTES);
-							break;
 						case 'date':
 							$form .= date(DISPLAY_DATE_FMT, $saved[$item['name']]);
 							break;
-						case 'datetime-local':
+						case 'datetime':
 							$form .= date(DISPLAY_DATE_FMT . ' ' . DISPLAY_TIME_FMT, $saved[$item['name']]);
 							break;
 					}
-					$form .= "'";
+					$form .= '"';
 				}
-				$form .= " />";
+
+				$form .= ' />';
 				break;
+
 			case 'textarea':
 				$form .= "<textarea name='" . $item['name'] . "' rows='3'>";
 				if ($saved && array_key_exists($item['name'], $saved)) {
@@ -104,6 +120,7 @@ function form_construct($form_info, $saved = NULL)
 				}
 				$form .= "</textarea>";
 				break;
+
 			case 'select':
 				$form .= "<select name='" . $item['name'] . "'>";
 				$form .= make_form_options($item['options'], ($saved && array_key_exists($item['name'], $saved) ? $saved[$item['name']] : NULL));
