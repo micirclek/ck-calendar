@@ -8,6 +8,7 @@ $(document).ready(function() {
 
 	function fix_event_times(data, $form, options) {
 		var start_date, start_time, end_date, end_time;
+
 		for (var i in data) {
 			if (data[i].name === 'start_ts-date') {
 				start_date = data[i].value;
@@ -18,9 +19,11 @@ $(document).ready(function() {
 			} else if (data[i].name === 'end_ts-time') {
 				end_time = data[i].value;
 			}
-			data.push({name: 'start_time', value: start_date + ' ' + start_time});
-			data.push({name: 'end_time', value: end_date + ' ' + end_time});
 		}
+
+		data.push({name: 'start_time', value: start_date + ' ' + start_time});
+		data.push({name: 'end_time', value: end_date + ' ' + end_time});
+
 		return true;
 	}
 
