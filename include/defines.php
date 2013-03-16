@@ -22,7 +22,8 @@ define('CONFIG_PATH', '/include/config.php');
 
 define('SECS_IN_DAY', 60*60*24);
 define('MYSQL_DATE_FMT', 'Y-m-d');
-define('MYSQL_DATETIME_FMT', MYSQL_DATE_FMT . ' G:i:s');
+define('MYSQL_TIME_FMT', 'G:i:s');
+define('MYSQL_DATETIME_FMT', MYSQL_DATE_FMT . ' ' . MYSQL_TIME_FMT);
 define('DISPLAY_TIME_FMT', 'g:ia');
 define('DISPLAY_DATE_FMT', 'Y-m-d');
 

@@ -66,7 +66,50 @@ if (isset($_POST['status'])) {
 $_POST['status'] = $config->get('event_default_status', 'open');
 $_POST['creator'] = $_SESSION['user_id'];
 
-$query = 'INSERT INTO events ' . db_get_insert_statement($mysqli, $EVENT_FIELDS, array($_POST)) . ';';
+$data = $_POST;
+$insert_data = array($data);
+
+$start_time = new DateTime($_POST['start_time']);
+$end_time = new DateTime($_POST['end_time']);
+
+$start_tod = $start_time->format(MYSQL_TIME_FMT);
+$difference = $start_time->diff($end_time);
+$import_format = 'Ymd ' . MYSQL_TIME_FMT;
+$day = new DateInterval('P1D');
+
+if ($_SESSION['access_level'] < $config->get('access_add_event', ACCESS_MEMBER)) {
+
+if (isset($_POST['additional_dates']) &&
+    $_SESSION['access_level'] >= $config->get('access_add_event_recurring', ACCESS_COMMITTEE)) {
+	$additional_dates = json_decode($_POST['additional_dates']);
+
+	foreach ($additional_dates as $date) {
+		if (is_array($date)) {
+			$additional_start = DateTime::createFromFormat($import_format, $date[0] . ' ' . $start_tod);
+			$range_end = DateTime::createFromFormat($import_format, $date[1] . ' ' . $start_tod);
+
+			while ($additional_start <= $range_end) {
+				$additional_end = clone $additional_start;
+				$additional_end->add($difference);
+				$data['start_time'] = $additional_start->format(MYSQL_DATETIME_FMT);
+				$data['end_time'] = $additional_end->format(MYSQL_DATETIME_FMT);
+				$insert_data[] = $data;
+
+				$additional_start->add($day);
+			}
+		} else {
+			$additional_start = DateTime::createFromFormat($import_format, $date . ' ' . $start_tod);
+			$additional_end = clone $additional_start;
+			$additional_end->add($difference);
+
+			$data['start_time'] = $additional_start->format(MYSQL_DATETIME_FMT);
+			$data['end_time'] = $additional_end->format(MYSQL_DATETIME_FMT);
+			$insert_data[] = $data;
+		}
+	}
+}
+
+$query = 'INSERT INTO events ' . db_get_insert_statement($mysqli, $EVENT_FIELDS, $insert_data) . ';';
 if (!$mysqli->query($query)) {
 	Log::insert($mysqli, Log::error_mysql, NULL, NULL, $mysqli->error);
 	$response->add_item('msg', 'error adding event');

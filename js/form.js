@@ -31,6 +31,29 @@ $(document).ready(function() {
 		$(this).datepicker({dateFormat: 'yy-mm-dd'});
 	});
 
+	$('input.multidate').each(function() {
+		var _this = $(this);
+		var obj, initial;
+		$(this).hide();
+		obj = $('<div>').css('width', '206px');
+		$(this).before(obj);
+
+		initial = [];
+		if ($(this).val())
+			initial = $.parseJSON($(this).val());
+
+		Calendar.setup({
+			cont: obj[0],
+			fdow: 0,
+			weekNumbers: false,
+			selectionType: Calendar.SEL_MULTIPLE,
+			selection: initial,
+			onSelect: function() {
+				_this.val(JSON.stringify(this.selection.get()));
+			}
+		});
+	});
+
 	$('input.user-input').each(function() {
 		var _this = $(this)
 		var _that;

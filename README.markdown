@@ -22,6 +22,8 @@ should be passed an array which can contain any of the following options:
 *  club_name (required): name of the club
 *  cookie_name: name for the persistent login cookie
 *  access_add_event: the access level required to add an event
+*  access_add_event_recurring: the access level required to add a recurring
+   event
 *  access_edit_event: the access level required to edit an event
 *  access_view_signup: the access level required to view event signups
 *  access_edit_signups: the access level required to make changes to event

@@ -88,6 +88,7 @@ function form_construct($form_info, $saved = NULL)
 
 			case 'datetime':
 			case 'date':
+			case 'multidate':
 				$form .= '<input name="' . $item['name'] .'" type="text" class="' .
 				         $item['type'] . '"';
 
@@ -105,6 +106,9 @@ function form_construct($form_info, $saved = NULL)
 							break;
 						case 'datetime':
 							$form .= date(DISPLAY_DATE_FMT . ' ' . DISPLAY_TIME_FMT, $saved[$item['name']]);
+							break;
+						default:
+							$form .= htmlspecialchars($saved[$item['name']]);
 							break;
 					}
 					$form .= '"';

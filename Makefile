@@ -15,5 +15,5 @@ build: css/calendar.min.css css/form.min.css
 %.min.js: %.js
 	$(JAVA) -jar $(JS_CLOSURE) $^ > $@ || (rm -f $@; false)
 
-js/form.min.js: js/jquery-ui.js js/jquery.form.js js/jquery.timepicker.js
-css/form.min.css: css/jquery.timepicker.css
+js/form.min.js: js/jquery-ui.js js/jquery.form.js js/jquery.timepicker.js js/multical.js
+css/form.min.css: css/jquery.timepicker.css css/multical.css

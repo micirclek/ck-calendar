@@ -60,7 +60,7 @@ $defaults = array(
 	'end_ts' => strtotime('18:00'),
 );
 
-echo event_form_construct($mysqli, $defaults);
+echo event_form_construct($mysqli, $defaults, true);
 ?>
 			<div class='form-actions'>
 				<button type='submit' class='btn btn-primary'>Submit Event</button>

@@ -137,7 +137,7 @@ function event_get_status($event_data)
  * @param array $saved an array of saved form data
  * @return string the form
  */
-function event_form_construct($mysqli, $saved = NULL)
+function event_form_construct($mysqli, $saved = NULL, $new = false)
 {
 	$config = new Config();
 
@@ -172,6 +172,12 @@ function event_form_construct($mysqli, $saved = NULL)
 		array('name' => 'primary_type', 'title' => 'Primary Type', 'type' => 'select', 'options' => $primary_types),
 		array('name' => 'secondary_type', 'title' => 'Secondary Type', 'type' => 'select', 'options' => $secondary_types),
 	);
+
+	if ($new && $_SESSION['access_level'] >= $config->get('access_add_event_recurring', ACCESS_COMMITTEE)) {
+		$form_info[] = array('name' => 'additional_dates',
+		                     'title' => 'Additional Dates',
+		                     'type' => 'multidate');
+	}
 
 	if (!isset($saved['status']) || ($saved['status'] == 'pending' &&
 	    $_SESSION['access_level'] < $config->get('access_edit_event', ACCESS_CHAIRPERSON))) {
