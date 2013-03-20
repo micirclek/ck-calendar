@@ -75,8 +75,7 @@ function event_list_date($mysqli, $date)
 function event_list_range($mysqli, $start, $end)
 {
 	$where = 'start_time>=\'' . date(MYSQL_DATETIME_FMT, $start) . '\' AND
-	          start_time<=\'' . date(MYSQL_DATETIME_FMT, $end) . '\' AND
-	          end_time<=\'' . date(MYSQL_DATETIME_FMT, $end) . '\'';
+	          start_time<=\'' . date(MYSQL_DATETIME_FMT, $end) . '\'';
 	return __event_list($mysqli, $where);
 }
 
