@@ -39,8 +39,11 @@ $(document).ready(function() {
 		$(this).before(obj);
 
 		initial = [];
-		if ($(this).val())
+		if ($(this).val()) {
 			initial = $.parseJSON($(this).val());
+		} else {
+			$(this).val('[]');
+		}
 
 		Calendar.setup({
 			cont: obj[0],

@@ -77,11 +77,11 @@ $difference = $start_time->diff($end_time);
 $import_format = 'Ymd ' . MYSQL_TIME_FMT;
 $day = new DateInterval('P1D');
 
-if ($_SESSION['access_level'] < $config->get('access_add_event', ACCESS_MEMBER)) {
-
 if (isset($_POST['additional_dates']) &&
     $_SESSION['access_level'] >= $config->get('access_add_event_recurring', ACCESS_COMMITTEE)) {
-	$additional_dates = json_decode($_POST['additional_dates']);
+	if (!($additional_dates = json_decode($_POST['additional_dates']))) {
+		goto skip_additional_dates;
+	}
 
 	foreach ($additional_dates as $date) {
 		if (is_array($date)) {
@@ -108,6 +108,8 @@ if (isset($_POST['additional_dates']) &&
 		}
 	}
 }
+
+skip_additional_dates:
 
 $query = 'INSERT INTO events ' . db_get_insert_statement($mysqli, $EVENT_FIELDS, $insert_data) . ';';
 if (!$mysqli->query($query)) {
