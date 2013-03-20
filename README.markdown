@@ -12,6 +12,10 @@ javascript.  Upload the files to your web host and navigate to the setup
 directory.  Give the database information (please set up a separate mysql
 database for this) and it will walk you through the rest of the setup.
 
+If you would like to use emails, phpmailer must be downloaded (it is available
+at https://code.google.com/a/apache-extras.org/p/phpmailer/).  The files
+should be placed in the directory extern/phpmailer.
+
 The configuration object should be set up using the lib/ConfigGen object.  It
 should be passed an array which can contain any of the following options:
 
@@ -42,6 +46,8 @@ should be passed an array which can contain any of the following options:
 *  navbar_links: an array of links to be shown in the navbar.  The array keys
    should be the link text with the values as the urls
 *  event_default_status: the default status for an event (open, pending, etc.)
+*  emails_enabled: whether emails should be sent (true/false)
+*  emails_from_address: the address emails should be sent from
 
 This file is located at include/config.php by default.  Feel free to add any of
 the configuration options to the file manually.

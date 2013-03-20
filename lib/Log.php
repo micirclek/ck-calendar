@@ -26,6 +26,7 @@ class Log {
 	const info                   = 0;
 	const error_mysql            = 1;
 	const error_logger           = 2;
+	const error_email            = 3;
 
 	//events
 	const event_add              = 51;
