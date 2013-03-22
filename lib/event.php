@@ -30,9 +30,9 @@ require_once(BASE_PATH . '/include/event.php');
 function __event_list($mysqli, $where)
 {
 	$query = 'SELECT
-	          event_id, status, name, creator, leader, capacity, location,
-	          start_time, end_time, committee_id, primary_type, secondary_type,
-	          suc.signups, suc.seats
+	          event_id, status, name, creator, leader, capacity, meeting_location,
+	          location, start_time, end_time, committee_id, primary_type,
+	          secondary_type, suc.signups, suc.seats
 	          FROM events
 	          LEFT JOIN (SELECT COUNT(*) AS signups, SUM(seats) AS seats, event_id
 	                     FROM signups GROUP BY event_id) AS suc USING(event_id)

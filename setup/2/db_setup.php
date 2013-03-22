@@ -115,6 +115,7 @@ $query = 'CREATE TABLE events (
 	description TEXT,
 	primary_type ENUM(\'service\', \'k-fam\', \'fundraiser\', \'meeting\', \'social\', \'pr\', \'other\') NOT NULL DEFAULT \'other\',
 	secondary_type ENUM(\'k-fam\', \'social\') DEFAULT NULL,
+	reminder_sent TINYINT(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY (event_id),
 	FOREIGN KEY (creator) REFERENCES users(user_id),
 	FOREIGN KEY (leader) REFERENCES users(user_id),
