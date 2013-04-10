@@ -113,8 +113,8 @@ if ($config->get('emails_enabled', false) && is_file(BASE_PATH . '/extern/phpmai
 		$manager_name = $event_data['c_name'];
 	}
 
-	$start_date = new DateTime('@' . $event_data['start_ts']);
-	$end_date = new DateTime('@' . $event_data['end_ts']);
+	$start_date = new DateTime($event_data['start_time']);
+	$end_date = new DateTime($event_data['end_time']);
 
 	$email_body = '<p>Hello ' . $user_info['first_name'] . ',</p>';
 	$email_body .= '<p>Thank you for signing up for ' . $event_data['name'] . ' on ' .

@@ -53,6 +53,9 @@ if (!$event_data) {
 	goto end;
 }
 
+$event_data['start_ts'] = strtotime($event_data['start_time']);
+$event_data['end_ts'] = strtotime($event_data['end_time']);
+
 $header->add_title($event_data['name']);
 $header->render_head();
 

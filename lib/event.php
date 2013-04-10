@@ -89,8 +89,7 @@ function event_list_range($mysqli, $start, $end)
 function event_get_data($mysqli, $event_id)
 {
 	$query = "SELECT status, events.name, creator, leader, capacity, driver_needed,
-	          meeting_location, location, UNIX_TIMESTAMP(start_time) AS start_ts,
-	          UNIX_TIMESTAMP(end_time) AS end_ts, committee_id,
+	          meeting_location, location, start_time, end_time, committee_id,
 	          com.name AS committee_name, description, primary_type,
 	          secondary_type, signups, CONCAT(ci.first_name, ' ', ci.last_name) AS c_name,
 	          ci.email AS c_email, CONCAT(li.first_name, ' ', li.last_name) AS l_name,
