@@ -44,13 +44,17 @@ if (isset($_SESSION['user_id'])) {
 	goto end;
 }
 
+echo '<div class="well">';
 if ($manager) {
-	echo '<form class="form-inline well" action="" menthod="get">';
+	echo '<form class="form-inline" action="" menthod="get" style="display: inline;">';
 	echo '<label class="control-label">User:</label> ';
 	echo '<input class="user-input" name="user_id" type="number" steps="1" min="1" /> ';
 	echo '<button type="submit" class="btn">Lookup Hours</button>';
 	echo '</form>';
 }
+echo '<a href="hours_export.php?user_id=' . $user_id .
+     '" style="padding-left: 15px;"><button class="btn">Export</button></a>';
+echo '</div>';
 
 $hours = array('service' => '', 'other' => '');
 $total = array('service' => 0, 'other' => 0);

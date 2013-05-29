@@ -143,9 +143,13 @@ class Header {
 			if ($_SESSION['access_level'] >= $config->get('access_manage_committees', ACCESS_EBOARD)) {
 				$manage_items .= '<li><a href="committee_manage.php">Manage Committees</a></li>';
 			}
+
 			if ($_SESSION['access_level'] >= $config->get('access_manage_members', ACCESS_CHAIRPERSON)) {
 				$manage_items .= '<li><a href="member_manage.php">Manage Members</a></li>';
 			}
+
+			if ($_SESSION['access_level'] >= $config->get('access_view_member_hours', ACCESS_EBOARD))
+				$manage_items .= '<li><a href="hours_export.php">Export All Hours</a></li>';
 
 			if ($manage_items) {
 				$content .= '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">' .
